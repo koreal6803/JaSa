@@ -15,14 +15,18 @@ html, body, #map-canvas {
 .node {
   border-radius: 50%;
   position: absolute;
-
   border-color: rgba(255,255,255,.5);
-  //border-style: solid;
   display: inline;
   text-overflow:ellipsis;
   white-space:nowrap;
   vertical-align: bottom;
   font-size: 1em;
+  color: rgba(0,0,0,0.9);
+}
+
+.node h4 {
+  color: rgba(0,0,0,0.9);
+  font-size: 2em;
 }
 
 .edge {
