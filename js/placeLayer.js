@@ -57,7 +57,7 @@ function PlaceLayer(places , map) {
             .nodes(_nodes)
             .links(_edges)
             .size([this.getPanes().overlayLayer.scrollWidth, this.getPanes().overlayLayer.scrollHeight])
-            .linkDistance(this.getPanes().overlayLayer.scrollWidth/20);
+            .linkDistance(this.getPanes().overlayLayer.scrollWidth/10);
 
         // setup google map undraggable or draggable depending on overlayLayer event
         google.maps.event.addDomListener(_overlayLayer[0][0], 'click', function(e) {
@@ -85,6 +85,10 @@ function PlaceLayer(places , map) {
         convertLatLng(_places);
 
         this.force.stop();
+        
+        // reset the link Distance because some nodes are too close when zoom out
+        var zoomLevel = map.getZoom();
+        console.log(zoomLevel);
 
         // conver each data to divs (div is an visual object)
         this.updateLayout();
@@ -203,6 +207,13 @@ function PlaceLayer(places , map) {
                          '<li>營業：'+open+'</li></ul>' );
         else
             div.html('');
+
+        if(d.fixed === false) {
+            var plusx = Number(d.x) + Number(-5);
+            var plusy = Number(d.y) + Number(-5);
+            div.style("left" , plusx + "px")
+               .style("right" , plusy + "px");
+        }
 
 
         return div;
