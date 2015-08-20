@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>食啥 | 一眼發掘在地美食！</title>
     <meta name="description" content="想吃什麼呢？找餐廳怎麼這麼困難！？看完食記還是不知道要吃哪家餐廳？「食啥」能讓您一眼瞭解明天約會的行程、出去郊遊的休息地、或是家族聚會好所在。「食啥」提供美食地圖視覺化系統，配合高準確度的評論與google map結合，帶您快速瞭解在地美食，不讓您的肚子留下遺憾！">
-    <meta name="keywords" content="餐廳,視覺,地圖,美食,食記,restaurant,visualization">
+    <meta name="keywords" content="食啥,吃什麼,餐廳,視覺,地圖,美食,食記,restaurant,visualization">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
@@ -32,7 +32,8 @@
     </section>
 
     <section class="main-content">
-      <input id="pac-input" class="controls" type="text" placeholder="要去哪食？">
+      <input id="place-input" class="controls" type="text" placeholder="去哪食？">
+      <input id="food-input"  class="controls" type="text" placeholder="食什麼？">
       <div id="map-canvas"></div>
     </section>
       <footer class="site-footer">
@@ -67,19 +68,26 @@
         map.setCenter(initialLocation);
       }
 
-
-      // Create the search box and link it to the UI element.
-      var input = document.getElementById('pac-input');
-      var searchBox = new google.maps.places.SearchBox(input);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-      searchBoxInit(searchBox);
-
-
-
       // place refresh setup
       var placeService = new google.maps.places.PlacesService(map);
       var placeRefresh = new PlaceRefresh(map, placeService);
       placeRefresh.setKeyword('餐廳');
+
+      // Create the place search box and link it to the UI element.
+      var placeInput = document.getElementById('place-input');
+      var searchBox = new google.maps.places.SearchBox(placeInput);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(placeInput);
+      searchBoxInit(searchBox);
+
+      // Create the food search box and link it to the UI element.
+      var foodInput = document.getElementById('food-input');
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(foodInput);
+      placeRefresh.setKeywordSearchBox(foodInput);
+      foodInput.addEventListener("keydown", function (event) {
+          if(event.keyCode == 13)
+              placeRefresh.nearbySearch();
+      });
+      
 
       // place layer setup
       PlaceLayer.prototype = new google.maps.OverlayView();

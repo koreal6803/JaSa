@@ -18,6 +18,8 @@ function PlaceRefresh(googleMap , googlePlace){
     // prcess id for searching detail informations of a place
     var _invervalProcessID;
 
+    var _keywordSearchBox;
+
     // set keyword
     this.setKeyword = function(key){
         _keyword = key;
@@ -37,9 +39,10 @@ function PlaceRefresh(googleMap , googlePlace){
     this.nearbySearch = function() {
       var request = {
         bounds: googleMap.getBounds(),
-        /*keyword: _keyword*/
         types: ['restaurant']
       };
+      if(_keywordSearchBox !== undefined && _keywordSearchBox.value !== "")
+          request.keyword = _keywordSearchBox.value;
       googlePlace.nearbySearch(request, updatePlace);
     };
 
@@ -52,12 +55,16 @@ function PlaceRefresh(googleMap , googlePlace){
       googlePlace.radarSearch(request, updatePlace);
     };
 
+    this.setKeywordSearchBox = function (textBox) {
+        _keywordSearchBox= textBox;
+    };
+
     // after nearby/radarSearch, unpdatePlace will be call to update _places
     var updatePlace = function(results , status){
 
       // check results
       if (status != google.maps.places.PlacesServiceStatus.OK) {
-        alert(status);
+        console.log(status);
         return;
       }
 
@@ -109,7 +116,7 @@ function PlaceRefresh(googleMap , googlePlace){
       var place = _detialSearchQueue.pop();
       googlePlace.getDetails({"placeId":place.place_id} , function(results , status){
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
-          alert(status);
+          console.log(status);
           return;
         }
         _callbackDetial(results);
