@@ -18,15 +18,18 @@ html, body, #map-canvas {
   border-color: rgba(255,255,255,.5);
   display: inline;
   text-overflow:ellipsis;
-  white-space:nowrap;
-  vertical-align: bottom;
+  vertical-align: center;
   font-size: 1em;
-  color: rgba(0,0,0,0.9);
+  word-break: break-all;
 }
 
-.node h4 {
+.node p {
   color: rgba(0,0,0,0.9);
-  font-size: 2em;
+  word-break: break-all;
+  font-size: 1.5em;
+}
+
+.node p {
 }
 
 .edge {

@@ -192,7 +192,7 @@ function PlaceLayer(places , map) {
            .style('height'     , (d.radius * 2) + 'px' )
            .style('margin-left', ' -' + d.radius + 'px' )
            .style('margin-top' , ' -' + d.radius + 'px' )
-           .style('background' , color() )
+           .style('background' , d.color )
            .style("left", d.x + "px")
            .style("top",  d.y + "px");
 
@@ -205,15 +205,13 @@ function PlaceLayer(places , map) {
             open = '營業中';
         else
             open = '休息中';
-
+//.style("text-anchor", "middle")
         // if the node is big node, then append some infomation
         if(d.fixed === false)
-           div.html('<h4>'+ d.info.name + '</h4>'+
-                    '<ul><li>Rate: '+d.info.rating+'</li>'+
-                         '<li>位址：'+d.info.vicinity+'</li>'+
-                         '<li>營業：'+open+'</li></ul>' );
+           div.html('<p style="text-align:center;line-height:50px;margin-top:'+(d.radius/2)+'px;padding-top:0;word-break: normal;width:'+(d.radius*2)+'px">'+ d.info.name + '</p>');
         else
             div.html('');
+
 
         if(d.fixed === false) {
             var plusx = Number(d.x) + Number(-5);
@@ -280,7 +278,7 @@ function PlaceLayer(places , map) {
         for (var i in _places) {
             ret.push(clone(_places[i]));
             ret[ret.length - 1].fixed = false;
-            ret[ret.length - 1].color = 'rgba(63, 191, 191, 0.9)';
+            ret[ret.length - 1].color = color();
         }
     }
 
@@ -373,14 +371,9 @@ function PlaceLayer(places , map) {
         _obj.force.resume();
     }
     function color () {
-        var red;
-        var green;
-        var blue;
         var alpha = 0.9;
-        var bias = 150;
-        red = Math.random()*(255-bias) + bias;
-        green = Math.random()*(255-bias) + bias;
-        blue = Math.random()*(255-bias) + bias;
-        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+        var beautifulColor = ["FF0066","E5FF00","00FF99","1900FF"];
+        
+        return "#"+beautifulColor[Math.floor((Math.random() * 4) + 0)];
     }
 }
