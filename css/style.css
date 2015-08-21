@@ -36,13 +36,12 @@ html, body, #map-canvas {
     height: 0;
     border-radius: 50%;
     content: "";
-  /*
+    /*
   box-shadow: inset -25px -25px 40px rgba(0,0,0,.3);
   background-image: -webkit-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
   background-image: -moz-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);  
   background-image: -o-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
-  background-image: -ms-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
-  */
+  background-image: -ms-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);*/
 }
 
 .node__inner {
@@ -67,6 +66,7 @@ html, body, #map-canvas {
     vertical-align: middle;
     font-size: 1.5em;
     word-break: break-all;
+    color: white;
 }
 
 
