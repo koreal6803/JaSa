@@ -20,6 +20,8 @@ function PlaceRefresh(googleMap , googlePlace){
 
     var _keywordSearchBox;
 
+    var _callbackCenterControl;
+
     // set keyword
     this.setKeyword = function(key){
         _keyword = key;
@@ -30,9 +32,24 @@ function PlaceRefresh(googleMap , googlePlace){
       _callbackPlaces = callback;
     }
 
+    this.onCenterControl = function(callback) {
+      _callbackCenterControl = callback;
+    }
+
     // _callbackDetial function will be call whenever the detial of place are searched
-    this.onAddPlaceDetial = function(callback) {
-      _callbackDetial = callback;
+    this.onAddPlaceDetial = function(place_id) {
+      googlePlace.getDetails({"placeId":place_id} , function(results , status){
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          console.log(status);
+          return;
+        }
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new _callbackCenterControl(centerControlDiv, map, results);
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();
+        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
+        console.log(results);
+      });
     }
 
     // nearbySearch will search 20 places in the view
