@@ -253,7 +253,7 @@ function PlaceLayer(places , map) {
 
     // initial a node not only apperant but also position
     var nodeInitialTransition = function(d) {
-        var div = d3.select(this)
+        var div = d3.select(this);
 
         // div style (circle)
         div.style('width'      , (d.radius * 2) + 'px' )
@@ -281,11 +281,10 @@ function PlaceLayer(places , map) {
                             .append("div")
                             .attr("class","node__content")
                             .html(d.info.name);
-            div.append("div").attr("class","node__circle")
-               .style('background' , d.color );
         }
-        else
-            div.html('');
+
+        div.append("div").attr("class","node__circle")
+           .style('background' , d.color );
 
 
         if(d.fixed === false) {
