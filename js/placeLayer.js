@@ -181,18 +181,11 @@ function PlaceLayer(places , map) {
                     d3.select("#dislikeDIV").style("visibility","hidden");
                 if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
-                    console.log(likeDIV);
-                    console.log(dislikeDIV);
-
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
+                    parseOperation.setPopular(d.place_id, 1);  
                 }
                 else if(absLength>200)
                 {
-                    console.log(likeDIV);
-                    console.log(dislikeDIV);
-                    console.log("dislike="+d.x);
-                    console.log("dislike="+d.y);
+                    parseOperation.setPopular(d.place_id, 2);  
                 }
                 //console.log(d);
             });
