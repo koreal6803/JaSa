@@ -160,10 +160,10 @@ function PlaceLayer(places , map) {
             .on("mouseover",function(d){
                 d3.select(this).transition()
                 .ease('cubic-in')
-                .style('width'      , (d.radius *2.5) + 'px' )
-               .style('height'     , (d.radius *2.5) + 'px' )
-               .style('margin-left', ' -' + d.radius*1.25 + 'px' )
-               .style('margin-top' , ' -' + d.radius*1.25 + 'px' )
+                .style('width'      , (d.radius *3) + 'px' )
+               .style('height'     ,  (d.radius *3) + 'px' )
+               .style('margin-left', ' -' + d.radius*1.5 + 'px' )
+               .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
@@ -216,7 +216,6 @@ function PlaceLayer(places , map) {
            .style('height'     , (d.radius * 2) + 'px' )
            .style('margin-left', ' -' + d.radius + 'px' )
            .style('margin-top' , ' -' + d.radius + 'px' )
-           .style('background' , d.color )
            .style("left", d.x + "px")
            .style("top",  d.y + "px");
 
@@ -229,10 +228,18 @@ function PlaceLayer(places , map) {
             open = '營業中';
         else
             open = '休息中';
-//.style("text-anchor", "middle")
-        // if the node is big node, then append some infomation
-        if(d.fixed === false)
-           div.html(d.info.name);
+        div.html("");
+        if(d.fixed === false){
+            div.append("div")
+                            .attr("class","node__inner")
+                            .append("div")
+                            .attr("class","node__wrapper")
+                            .append("div")
+                            .attr("class","node__content")
+                            .html(d.info.name);
+            div.append("div").attr("class","node__circle")
+               .style('background' , d.color );
+        }
         else
             div.html('');
 
