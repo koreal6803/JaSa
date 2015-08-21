@@ -32,9 +32,9 @@ function PlaceRefresh(googleMap , googlePlace){
       _callbackPlaces = callback;
     }
 
-    //this.onCenterControl = function(callback) {
-    //  _callbackCenterControl = callback;
-    //}
+    this.onCenterControl = function(callback) {
+      _callbackCenterControl = callback;
+    }
 
     // _callbackDetial function will be call whenever the detial of place are searched
     this.onAddPlaceDetial = function(place_id) {
@@ -44,7 +44,7 @@ function PlaceRefresh(googleMap , googlePlace){
           return;
         }
         var centerControlDiv = document.createElement('div');
-        var centerControl = new CenterControl(centerControlDiv, map, results);
+        var centerControl = new _callbackCenterControl(centerControlDiv, map, results);
         centerControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();
         map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);

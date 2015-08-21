@@ -6,7 +6,7 @@ function CenterControl(controlDiv, map, d) {
   controlUI.style.border = '2px solid #fff';
   controlUI.style.borderRadius = '3px';
   controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-  controlUI.style.cursor = 'pointer';
+  controlUI.style.cursor = 'cursor';
   controlUI.style.marginBottom = '22px';
   controlUI.style.textAlign = 'left';
   controlUI.title = 'Resturant Information';
