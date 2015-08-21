@@ -21,7 +21,6 @@ html, body, #map-canvas {
   vertical-align: center;
   font-size: 1em;
   color: rgba(0,0,0,0.9);
-  word-break: break-all;
   text-align:center;
 
   display: block;
@@ -67,7 +66,7 @@ html, body, #map-canvas {
     padding: 1em;
     vertical-align: middle;
     font-size: 1.5em;
-    word-break: keep-all;
+    word-break: break-all;
 }
 
 

@@ -363,7 +363,7 @@ function PlaceLayer(places , map) {
             ret.push(clone(_places[i]));
             ret[ret.length - 1].fixed = true;
             ret[ret.length - 1].radius = 5;
-            ret[ret.length - 1].color = 'rgba(127, 63, 191, 1)';
+            ret[ret.length - 1].color = 'rgba(0,0,0,0.6)';
         }
         for (var i in _places) {
             ret.push(clone(_places[i]));
