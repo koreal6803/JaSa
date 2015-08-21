@@ -179,6 +179,7 @@ function PlaceLayer(places , map) {
                 //var dislikeDIV= d3.select("#dislikeDIV");
                     d3.select("#likeDIV").style("visibility","hidden");  
                     d3.select("#dislikeDIV").style("visibility","hidden");
+                    var parseOperation = new ParseOperation();
                 if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
                     parseOperation.setPopular(d.place_id, 1);  
