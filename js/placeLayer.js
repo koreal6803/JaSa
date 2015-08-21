@@ -147,15 +147,52 @@ function PlaceLayer(places , map) {
             .data(_nodes)
             .attr('class', 'node')
             .each(nodeInitialTransition)
-            .call(this.force.drag());
+            //.call(this.force.drag());
 
+        var startX,startY;
+        var dragEvent = this.force.drag()
+            .on("dragstart", function(d,i){
+                console.log("dragstart="+d.x);
+                console.log("dragstart="+d.y);
+                startX=d.x;
+                startY=d.y;
+            })
+            .on("drag", function(d) {
+                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
+                if(absLength>500 ){
+                    console.log("drag="+d.x);
+                    console.log("drag="+d.y);  
+                }
+
+            })
+            .on("dragend", function(d) {
+                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
+                if(absLength>500 && d.x>startX.x)
+                {
+                    console.log("like="+d.x);
+                    console.log("like="+d.y);
+                }
+                else
+                {
+                    console.log("dislike="+d.x);
+                    console.log("dislike="+d.y);
+                }
+                //console.log(d);
+            });
         // add new nodes
 
         _selectionNode.enter()
             .append("div")
             .attr('class', 'node')
             .each(nodeInitialTransition)
-            .call(this.force.drag())
+            .call(dragEvent)
+            // .on("mouseup.drag",function(d,i) {
+                
+            //     console.log("mouseup.drag="+d.x);
+            //     console.log("mouseup.drag="+d.y);
+
+            // })
+
 
             .on("mouseover",function(d){
                 d3.select(this).transition()
@@ -176,8 +213,15 @@ function PlaceLayer(places , map) {
             .on("click", function (d) {
                 if (d3.event.defaultPrevented) return;
                 _onClickNode(d);
+            })
+
+            .on("drag", function(d,i) {
+                var t = d3.select(this);
+                //turn {x: t.attr("x"), y: t.attr("y")};
+                console.log(t.attr("x"));
+                console.log(d.attr("y"));
+                
             });
-    
 
 
 
