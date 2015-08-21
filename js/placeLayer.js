@@ -144,17 +144,39 @@ function PlaceLayer(places , map) {
             .call(this.force.drag());
 
         // add new nodes
+
         _selectionNode.enter()
             .append("div")
             .attr('class', 'node')
             .each(nodeInitialTransition)
-            .call(this.force.drag());
+            .call(this.force.drag())
+            .on("mouseover",function(d){
+                d3.select(this).transition()
+                .ease('cubic-in')
+                .style('width'      , (d.radius *3) + 'px' )
+               .style('height'     , (d.radius *3) + 'px' )
+               .style('margin-left', ' -' + d.radius + 'px' )
+               .style('margin-top' , ' -' + d.radius + 'px' )
+            })
+            .on("mouseout",function(d){
+                d3.select(this).transition()
+               .ease('cubic-out')
+               .style('width'      , (d.radius*2) + 'px' )
+               .style('height'     , (d.radius*2) + 'px' )
+               .style('margin-left', ' -' + d.radius + 'px' )
+               .style('margin-top' , ' -' + d.radius + 'px' )
+            });
+
+    
+
+
 
 
         // remove redundant edges
         _selectionEdge.exit().remove();
         _selectionNode.exit().remove();
     }
+
 
     // add x and y to datas according to lng and lat
     var convertLatLng = function(datas) {
