@@ -156,24 +156,40 @@ function PlaceLayer(places , map) {
                 console.log("dragstart="+d.y);
                 startX=d.x;
                 startY=d.y;
+
             })
             .on("drag", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>500 ){
+                if(absLength>200 ){
                     console.log("drag="+d.x);
                     console.log("drag="+d.y);  
+                    d3.select("#likeDIV").style("visibility","visible");  
+                    d3.select("#dislikeDIV").style("visibility","visible");
+                }
+                else if (absLength < 180) {
+                    d3.select("#likeDIV").style("visibility","hidden");  
+                    d3.select("#dislikeDIV").style("visibility","hidden");
                 }
 
             })
             .on("dragend", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>500 && d.x>startX.x)
+                //var likeDIV= d3.select("#likeDIV");
+                //var dislikeDIV= d3.select("#dislikeDIV");
+                    d3.select("#likeDIV").style("visibility","hidden");  
+                    d3.select("#dislikeDIV").style("visibility","hidden");
+                if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
+                    console.log(likeDIV);
+                    console.log(dislikeDIV);
+
                     console.log("like="+d.x);
                     console.log("like="+d.y);
                 }
-                else
+                else if(absLength>200)
                 {
+                    console.log(likeDIV);
+                    console.log(dislikeDIV);
                     console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
                 }
