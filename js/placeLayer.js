@@ -156,27 +156,43 @@ function PlaceLayer(places , map) {
                 console.log("dragstart="+d.y);
                 startX=d.x;
                 startY=d.y;
+
             })
             .on("drag", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>500 ){
+                if(absLength>200 ){
                     console.log("drag="+d.x);
                     console.log("drag="+d.y);  
+                    d3.select("#likeDIV").style("visibility","visible");  
+                    d3.select("#dislikeDIV").style("visibility","visible");
+                }
+                else if (absLength < 180) {
+                    d3.select("#likeDIV").style("visibility","hidden");  
+                    d3.select("#dislikeDIV").style("visibility","hidden");
                 }
 
             })
             .on("dragend", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                var parseOperation = new ParseOperation();
-                if(absLength>500 && d.x>startX)
+
+                //var likeDIV= d3.select("#likeDIV");
+                //var dislikeDIV= d3.select("#dislikeDIV");
+                    d3.select("#likeDIV").style("visibility","hidden");  
+                    d3.select("#dislikeDIV").style("visibility","hidden");
+                if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
-                    console.log("right");
-                  parseOperation.setPopular(d.place_id, 1);   
+                    console.log(likeDIV);
+                    console.log(dislikeDIV);
+
+                    console.log("like="+d.x);
+                    console.log("like="+d.y);
                 }
-                else if (absLength>500)
+                else if(absLength>200)
                 {
-                    console.log("left");
-                  parseOperation.setPopular(d.place_id, 2);
+                    console.log(likeDIV);
+                    console.log(dislikeDIV);
+                    console.log("dislike="+d.x);
+                    console.log("dislike="+d.y);
                 }
                 //console.log(d);
             });
@@ -198,10 +214,10 @@ function PlaceLayer(places , map) {
             .on("mouseover",function(d){
                 d3.select(this).transition()
                 .ease('cubic-in')
-                .style('width'      , (d.radius *2.5) + 'px' )
-               .style('height'     , (d.radius *2.5) + 'px' )
-               .style('margin-left', ' -' + d.radius*1.25 + 'px' )
-               .style('margin-top' , ' -' + d.radius*1.25 + 'px' )
+                .style('width'      , (d.radius *3) + 'px' )
+               .style('height'     ,  (d.radius *3) + 'px' )
+               .style('margin-left', ' -' + d.radius*1.5 + 'px' )
+               .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
@@ -263,14 +279,13 @@ function PlaceLayer(places , map) {
 
     // initial a node not only apperant but also position
     var nodeInitialTransition = function(d) {
-        var div = d3.select(this)
+        var div = d3.select(this);
 
         // div style (circle)
         div.style('width'      , (d.radius * 2) + 'px' )
            .style('height'     , (d.radius * 2) + 'px' )
            .style('margin-left', ' -' + d.radius + 'px' )
            .style('margin-top' , ' -' + d.radius + 'px' )
-           .style('background' , d.color )
            .style("left", d.x + "px")
            .style("top",  d.y + "px");
 
@@ -283,12 +298,19 @@ function PlaceLayer(places , map) {
             open = '營業中';
         else
             open = '休息中';
-//.style("text-anchor", "middle")
-        // if the node is big node, then append some infomation
-        if(d.fixed === false)
-           div.html(d.info.name);
-        else
-            div.html('');
+        div.html("");
+        if(d.fixed === false){
+            div.append("div")
+                            .attr("class","node__inner")
+                            .append("div")
+                            .attr("class","node__wrapper")
+                            .append("div")
+                            .attr("class","node__content")
+                            .html(d.info.name);
+        }
+
+        div.append("div").attr("class","node__circle")
+           .style('background' , d.color );
 
 
         if(d.fixed === false) {
@@ -351,7 +373,7 @@ function PlaceLayer(places , map) {
             ret.push(clone(_places[i]));
             ret[ret.length - 1].fixed = true;
             ret[ret.length - 1].radius = 5;
-            ret[ret.length - 1].color = 'rgba(127, 63, 191, 1)';
+            ret[ret.length - 1].color = 'rgba(0,0,0,0.6)';
         }
         for (var i in _places) {
             ret.push(clone(_places[i]));
