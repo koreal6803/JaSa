@@ -185,7 +185,7 @@ function PlaceLayer(places , map) {
            .style('height'     , (d.radius * 2) + 'px' )
            .style('margin-left', ' -' + d.radius + 'px' )
            .style('margin-top' , ' -' + d.radius + 'px' )
-           .style('background' , d.color )
+           .style('background' , color() )
            .style("left", d.x + "px")
            .style("top",  d.y + "px");
 
@@ -364,5 +364,16 @@ function PlaceLayer(places , map) {
         d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
         _obj.updateLayout();
         _obj.force.resume();
+    }
+    function color () {
+        var red;
+        var green;
+        var blue;
+        var alpha = 0.9;
+        var bias = 150;
+        red = Math.random()*(255-bias) + bias;
+        green = Math.random()*(255-bias) + bias;
+        blue = Math.random()*(255-bias) + bias;
+        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
     }
 }
