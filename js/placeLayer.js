@@ -173,7 +173,7 @@ function PlaceLayer(places , map) {
                .style('margin-left', ' -' + d.radius + 'px' )
                .style('margin-top' , ' -' + d.radius + 'px' )
             })
-            on("click", function (d) {
+            .on("click", function (d) {
                 if (d3.event.defaultPrevented) return;
                 _onClickNode(d);
             });
