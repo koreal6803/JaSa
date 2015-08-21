@@ -20,17 +20,16 @@ html, body, #map-canvas {
   text-overflow:ellipsis;
   vertical-align: center;
   font-size: 1em;
-  word-break: break-all;
-}
-
-.node p {
   color: rgba(0,0,0,0.9);
   word-break: break-all;
-  font-size: 1.5em;
+  box-shadow: inset -25px -25px 40px rgba(0,0,0,.3);
+  background-image: -webkit-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
+  background-image: -moz-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);  
+  background-image: -o-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
+  background-image: -ms-linear-gradient(-45deg, rgba(255,255,220,.1) 0%, transparent 100%);
+
 }
 
-.node p {
-}
 
 .edge {
   height:1px;

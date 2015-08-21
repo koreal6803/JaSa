@@ -160,10 +160,10 @@ function PlaceLayer(places , map) {
             .on("mouseover",function(d){
                 d3.select(this).transition()
                 .ease('cubic-in')
-                .style('width'      , (d.radius *3) + 'px' )
-               .style('height'     , (d.radius *3) + 'px' )
-               .style('margin-left', ' -' + d.radius + 'px' )
-               .style('margin-top' , ' -' + d.radius + 'px' )
+                .style('width'      , (d.radius *2.5) + 'px' )
+               .style('height'     , (d.radius *2.5) + 'px' )
+               .style('margin-left', ' -' + d.radius*1.25 + 'px' )
+               .style('margin-top' , ' -' + d.radius*1.25 + 'px' )
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
@@ -232,7 +232,7 @@ function PlaceLayer(places , map) {
 //.style("text-anchor", "middle")
         // if the node is big node, then append some infomation
         if(d.fixed === false)
-           div.html('<p style="text-align:center;line-height:50px;margin-top:'+(d.radius/2)+'px;padding-top:0;word-break: normal;width:'+(d.radius*2)+'px">'+ d.info.name + '</p>');
+           div.html(d.info.name);
         else
             div.html('');
 
@@ -396,8 +396,8 @@ function PlaceLayer(places , map) {
     }
     function color () {
         var alpha = 0.9;
-        var beautifulColor = ["FF0066","E5FF00","00FF99","1900FF"];
+        var beautifulColor = ["rgba(11, 221, 24,0.9)","rgba(29, 98, 240 , 0.9)","rgba(255, 42, 104, 0.9)","rgba(255,205,2,0.9)"];
         
-        return "#"+beautifulColor[Math.floor((Math.random() * 4) + 0)];
+        return beautifulColor[Math.floor((Math.random() * 4) + 0)];
     }
 }
