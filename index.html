@@ -14,11 +14,14 @@
 
 
     <script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script async type="text/javascript" src="./js/placeRefresh.js"></script>
     <script async type="text/javascript" src="./js/panel.js"></script>
     <script async type="text/javascript" src="./js/placeLayer.js"></script>
     <script async type="text/javascript" src="./js/searchBox.js"></script>
+    <script async type="text/javascript" src="./js/parse.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
 
   </head>
@@ -51,6 +54,7 @@
   </body>
   <script>
     var map;
+    Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
 
     function initialize() {
 

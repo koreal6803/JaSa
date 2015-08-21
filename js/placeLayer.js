@@ -167,15 +167,16 @@ function PlaceLayer(places , map) {
             })
             .on("dragend", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>500 && d.x>startX.x)
+                var parseOperation = new ParseOperation();
+                if(absLength>500 && d.x>startX)
                 {
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
+                    console.log("right");
+                  parseOperation.setPopular(d.place_id, 1);   
                 }
-                else
+                else if (absLength>500)
                 {
-                    console.log("dislike="+d.x);
-                    console.log("dislike="+d.y);
+                    console.log("left");
+                  parseOperation.setPopular(d.place_id, 2);
                 }
                 //console.log(d);
             });
@@ -234,20 +235,29 @@ function PlaceLayer(places , map) {
     // add x and y to datas according to lng and lat
     var convertLatLng = function(datas) {
         // build _data[i].x and _data[i].y for each _data
+        var parseOperation = new ParseOperation();
         for(var i in datas){
 
             // fixed circles
             datas[i].fixed = true;
-            if(datas[i].info.rating === undefined)
-                datas[i].radius = 10;
-            else
-                datas[i].radius = (datas[i].info.rating-3) * 50 + 10;
+            datas[i].radius = 10;
+
             if(datas[i].radius < 10)
                 datas[i].radius = 10;
             var p = new google.maps.LatLng(datas[i].lng, datas[i].lat);
             p = _projection.fromLatLngToDivPixel(p);
             datas[i].x = p.x;
             datas[i].y = p.y;
+        }
+        for(var i in datas) {
+            parseOperation.getPopular(datas[i] , function(popular , data) {
+                data.radius = popular * 50 + 10;
+                //_obj.updateLayout();
+                //_obj.force.start();
+                console.log(data);
+                console.log("get name: " + data.info.name + "get popular: " + data.radius);
+            });
+
         }
     };
 
@@ -421,23 +431,7 @@ function PlaceLayer(places , map) {
         throw new Error("Unable to copy obj! Its type isn't supported.");
     };
 
-    function dragstart (d, i) {
-        _obj.force.stop(); // stops the force auto positioning before you start dragging
-    };
 
-    function dragmove (d, i) {
-        d.px += d3.event.dx;
-        d.py += d3.event.dy;
-        d.x += d3.event.dx;
-        d.y += d3.event.dy;
-        _obj.updateLayout() // this is the key to make it work together with updating both px,py,x,y on d !
-    };
-
-    function dragend (d, i) {
-        d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-        _obj.updateLayout();
-        _obj.force.resume();
-    }
     function color () {
         var alpha = 0.9;
         var beautifulColor = ["rgba(11, 221, 24,0.9)","rgba(29, 98, 240 , 0.9)","rgba(255, 42, 104, 0.9)","rgba(255,205,2,0.9)"];
