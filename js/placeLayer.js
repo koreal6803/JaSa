@@ -166,8 +166,17 @@ function PlaceLayer(places , map) {
 
             })
             .on("dragend", function(d) {
-                console.log("dragend="+d.x);
-                console.log("dragend="+d.y);
+                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
+                if(absLength>500 && d.x>startX.x)
+                {
+                    console.log("like="+d.x);
+                    console.log("like="+d.y);
+                }
+                else
+                {
+                    console.log("dislike="+d.x);
+                    console.log("dislike="+d.y);
+                }
                 //console.log(d);
             });
         // add new nodes
