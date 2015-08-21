@@ -63,7 +63,7 @@ function PlaceLayer(places , map) {
             .nodes(_nodes)
             .links(_edges)
             .size([this.getPanes().overlayLayer.scrollWidth, this.getPanes().overlayLayer.scrollHeight])
-            .linkDistance(this.getPanes().overlayLayer.scrollWidth/10);
+            .linkDistance(this.getPanes().overlayLayer.scrollWidth/15);
 
         // setup google map undraggable or draggable depending on overlayLayer event
         google.maps.event.addDomListener(_overlayLayer[0][0], 'click', function(e) {
@@ -155,7 +155,10 @@ function PlaceLayer(places , map) {
             .attr('class', 'node')
             .each(nodeInitialTransition)
             .call(this.force.drag())
-            .on("click", function (d) {_onClickNode(d);});
+            .on("click", function (d) {
+                if (d3.event.defaultPrevented) return;
+                _onClickNode(d);
+            });
 
 
         // remove redundant edges
