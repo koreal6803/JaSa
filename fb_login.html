@@ -135,18 +135,18 @@
         });
       }
     </script>
-    
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="position:absolute; left:0; top:0">
+    </fb:login-button>
+
+    <div id="status" style="position:absolute; left:150; top:0">
+    </div>
 
 
   </body>
   <script>
     var map;
     Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="position:absolute; left:0; top:0">
-    </fb:login-button>
 
-    <div id="status" style="position:absolute; left:150; top:0">
-    </div>
     function initialize() {
 
       // initial map
