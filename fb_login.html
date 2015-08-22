@@ -86,11 +86,12 @@
 
     function fbLogin(){
        FB.getLoginStatus(function(response) {
-           if (response.status === 'connected') {}
+           if (response.status === 'connected') {login = true;}
            else {
              Parse.FacebookUtils.logIn(null, {
                  success: function(user) {
                      current_user = user;
+                     login = true;
                  },
                  error: function(user, error) {
                    alert("User cancelled the Facebook login or did not fully authorize.");
