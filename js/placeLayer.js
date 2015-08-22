@@ -244,7 +244,7 @@ function PlaceLayer(places , map) {
                         } 
                     });
                     ///
-                
+                    console.log("1");
                     //console.log("like="+d.x);
                     //console.log("like="+d.y);
                     if (liked === false && disliked === false) { // undefine this place before
@@ -331,7 +331,7 @@ function PlaceLayer(places , map) {
                         } 
                     });
                     ///
-
+                    console.log("2");
                     if (liked === false && disliked === false) { 
                         console.log("decide to dislike")
                         parseOperation.setPopular(d.place_id, 2);  
