@@ -23,6 +23,8 @@ function PlaceLayer(places , map) {
 
     var _onClickNode;
 
+    var _popularUnit = 5;
+
     // modify _places according to old place index and new places
     this.updatePlaces = function (oldPlaceIdx, newPlaces) {
 
@@ -65,6 +67,26 @@ function PlaceLayer(places , map) {
             .size([this.getPanes().overlayLayer.scrollWidth, this.getPanes().overlayLayer.scrollHeight])
             .linkDistance(this.getPanes().overlayLayer.scrollWidth/15);
 
+        // setting force layout for tick event (animation)
+        var drawCnt = 0;
+        this.force.on('tick', function(e) {
+
+            // prevent overlaped nodes
+            var q = d3.geom.quadtree(_nodes),
+              i = 0,
+              n = _nodes.length;
+
+            for(var i = _places.length; i < _nodes.length ; i++) {
+                q.visit(collide(_nodes[i]));
+            }
+
+            // redering nodes
+            if(drawCnt++%3 === 0) { // reduce frame-rate
+                _selectionNode.each(nodeTransition);
+                _selectionEdge.each(edgeTransition);
+            }
+        });
+
         // setup google map undraggable or draggable depending on overlayLayer event
         google.maps.event.addDomListener(_overlayLayer[0][0], 'click', function(e) {
             console.log('click');
@@ -86,41 +108,10 @@ function PlaceLayer(places , map) {
     this.draw = function () {
         // projection is used for convert lat and lng to x and y, respectively
         _projection = this.getProjection();
+        _obj.updateLayout();
 
         // convert lat and lng of a position to x and y using projection
         convertLatLng(_places);
-
-        this.force.stop();
-        
-        // reset the link Distance because some nodes are too close when zoom out
-        var zoomLevel = map.getZoom();
-        console.log(zoomLevel);
-
-        // conver each data to divs (div is an visual object)
-        this.updateLayout();
-
-        // start force direct
-        this.force.start();
-
-        // setting force layout for tick event (animation)
-        var drawCnt = 0;
-        this.force.on('tick', function(e) {
-
-            // prevent overlaped nodes
-            var q = d3.geom.quadtree(_nodes),
-              i = 0,
-              n = _nodes.length;
-
-            for(var i = _places.length; i < _nodes.length ; i++) {
-                q.visit(collide(_nodes[i]));
-            }
-
-            // redering nodes
-            if(drawCnt++%3 === 0) { // reduce frame-rate
-                _selectionNode.each(nodeTransition);
-                _selectionEdge.each(edgeTransition);
-            }
-        });
     };
 
     // redraw the nodes and edges
@@ -147,7 +138,6 @@ function PlaceLayer(places , map) {
             .data(_nodes)
             .attr('class', 'node')
             .each(nodeInitialTransition)
-            //.call(this.force.drag());
 
         var startX,startY,absLength;
         var dragEvent = this.force.drag()
@@ -184,26 +174,41 @@ function PlaceLayer(places , map) {
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
 
-                if(absLength>300 &&　d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
-                {
-                    console.log(likeDIV);
-                    console.log(dislikeDIV);
 
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
-                }
-                else
+                var parseOperation = new ParseOperation();
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
+                    parseOperation.setPopular(d.place_id, 1);  
+                    for (var i in _places ) {
+                        if (d.place_id === _places[i].place_id) {
+                            _places[i].radius += _popularUnit;
+                            _obj.updateLayout();
+                            _obj.force.start();
+                            break;
+                        }
+                    }
+                }
+                else if(absLength>300)
+                {
+
                     console.log(likeDIV);
                     console.log(dislikeDIV);
                     console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
-                }                    
-                
 
-
-                //console.log(d);
+                    parseOperation.setPopular(d.place_id, 2);  
+                    for (var i in _places ) {
+                        if (d.place_id === _places[i].place_id) {
+                            _places[i].radius -= _popularUnit;
+                            _obj.updateLayout();
+                            _obj.force.start();
+                            break;
+                        }
+                    }
+                }
+                //map.set('draggable',true);
             });
+
         // add new nodes
 
         _selectionNode.enter()
@@ -211,34 +216,26 @@ function PlaceLayer(places , map) {
             .attr('class', 'node')
             .each(nodeInitialTransition)
             .call(dragEvent)
-            // .on("mouseup.drag",function(d,i) {
-                
-            //     console.log("mouseup.drag="+d.x);
-            //     console.log("mouseup.drag="+d.y);
-
-            // })
-
-
             .on("mouseover",function(d){
                 d3.select(this).transition()
-                .ease('cubic-in')
-                .style('width'      , (d.radius *3) + 'px' )
-               .style('height'     ,  (d.radius *3) + 'px' )
-               .style('margin-left', ' -' + d.radius*1.5 + 'px' )
-               .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
-               console.log("mouseover_HERE!");
+                   .ease('cubic-in')
+                   .style('width'      , (d.radius *3) + 'px' )
+                   .style('height'     ,  (d.radius *3) + 'px' )
+                   .style('margin-left', ' -' + d.radius*1.5 + 'px' )
+                   .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
-               .ease('cubic-out')
-               .style('width'      , (d.radius*2) + 'px' )
-               .style('height'     , (d.radius*2) + 'px' )
-               .style('margin-left', ' -' + d.radius + 'px' )
-               .style('margin-top' , ' -' + d.radius + 'px' )
+                   .ease('cubic-out')
+                   .style('width'      , (d.radius*2) + 'px' )
+                   .style('height'     , (d.radius*2) + 'px' )
+                   .style('margin-left', ' -' + d.radius + 'px' )
+                   .style('margin-top' , ' -' + d.radius + 'px' )
             })
             .on("click", function (d) {
                 if (d3.event.defaultPrevented) return;
-                _onClickNode(d);
+                
+                    _onClickNode(d);
             })
 
             // .on("drag", function(d,i) {
@@ -247,6 +244,7 @@ function PlaceLayer(places , map) {
             //     console.log(t.attr("x"));
             //     console.log(d.attr("y"));  
             // });
+
 
 
 
@@ -259,20 +257,42 @@ function PlaceLayer(places , map) {
     // add x and y to datas according to lng and lat
     var convertLatLng = function(datas) {
         // build _data[i].x and _data[i].y for each _data
+        var parseOperation = new ParseOperation();
         for(var i in datas){
 
             // fixed circles
             datas[i].fixed = true;
-            if(datas[i].info.rating === undefined)
-                datas[i].radius = 10;
-            else
-                datas[i].radius = (datas[i].info.rating-3) * 50 + 10;
+            datas[i].radius = 10;
+
             if(datas[i].radius < 10)
                 datas[i].radius = 10;
             var p = new google.maps.LatLng(datas[i].lng, datas[i].lat);
             p = _projection.fromLatLngToDivPixel(p);
             datas[i].x = p.x;
             datas[i].y = p.y;
+        }
+        var cnt = datas.length;
+        for(var i in datas) {
+            parseOperation.getPopular(datas[i] , function(popular , data) {
+                if(data.info.rating)
+                    data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
+                else
+                    data.radius = popular * _popularUnit + 10;
+                    
+                if(data.radius < 10)
+                    data.radius = 10;
+                console.log(data);
+                console.log("get name: " + data.info.name + "get popular: " + data.radius);
+
+                cnt--;
+                console.log("cnt "+cnt);
+
+                if(cnt === 0) {
+                    _obj.force.stop();
+                    _obj.updateLayout();
+                    _obj.force.start();
+                }
+            });
         }
     };
 
@@ -452,23 +472,7 @@ function PlaceLayer(places , map) {
         throw new Error("Unable to copy obj! Its type isn't supported.");
     };
 
-    function dragstart (d, i) {
-        _obj.force.stop(); // stops the force auto positioning before you start dragging
-    };
 
-    function dragmove (d, i) {
-        d.px += d3.event.dx;
-        d.py += d3.event.dy;
-        d.x += d3.event.dx;
-        d.y += d3.event.dy;
-        _obj.updateLayout() // this is the key to make it work together with updating both px,py,x,y on d !
-    };
-
-    function dragend (d, i) {
-        d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-        _obj.updateLayout();
-        _obj.force.resume();
-    }
     function color () {
         var alpha = 0.9;
         var beautifulColor = ["rgba(11, 221, 24,0.9)","rgba(29, 98, 240 , 0.9)","rgba(255, 42, 104, 0.9)","rgba(255,205,2,0.9)"];
