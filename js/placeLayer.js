@@ -90,24 +90,24 @@ function PlaceLayer(places , map) {
 
         // setup google map undraggable or draggable depending on overlayLayer event
         google.maps.event.addDomListener(_overlayLayer[0][0], 'click', function(e) {
-            console.log('click');
+            //console.log('click');
         });
         google.maps.event.addDomListener(_overlayLayer[0][0], 'mouseup', function() {
-            console.log("mouseup");
-            //map.set('draggable',true);
+            //console.log("mouseup");
+            map.set('draggable',true);
         });
         google.maps.event.addDomListener(_overlayLayer[0][0], 'mousedown', function() {
-            //map.set('draggable',false);
+            map.set('draggable',false);
         });
         google.maps.event.addDomListener(_overlayLayer[0][0], 'mouseover', function() {
-            console.log("mouseover");
+            //console.log("mouseover");
         });
     };
 
     // google map api will call this function when initial and zooming
     this.draw = function () {
         // projection is used for convert lat and lng to x and y, respectively
-        console.log('draw');
+        //console.log('draw');
         _overlayLayer.style("visibility", 'hidden');
         _projection = this.getProjection();
 
@@ -145,9 +145,8 @@ function PlaceLayer(places , map) {
             .on("dragstart", function(d,i){
                 startX=d.x;
                 startY=d.y;
-                console.log("dragstart startX="+d.x);
-                console.log("dragstart startY="+d.y);                
-
+                //console.log("dragstart startX="+d.x);
+                //console.log("dragstart startY="+d.y);                
             })
             .on("drag", function(d) {
                 absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
@@ -167,18 +166,18 @@ function PlaceLayer(places , map) {
                     d3.select("#dislikeDIV").style("opacity","1");
                 }                
                 if(absLength>300){
-                    console.log("drag="+d.x);
-                    console.log("drag="+d.y);  
+                    //console.log("drag="+d.x);
+                    //console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
                     d3.select("#dislikeDIV").style("visibility","visible");
 
                 }
                 else{
-                    console.log("startX="+startX);
-                    console.log("startY="+startY);
-                    console.log("d.x="+d.x);
-                    console.log("d.x="+d.y);
-                    console.log("hidden absLength ="+absLength);
+                    //console.log("startX="+startX);
+                    //console.log("startY="+startY);
+                    //console.log("d.x="+d.x);
+                    //console.log("d.x="+d.y);
+                    //console.log("hidden absLength ="+absLength);
                     d3.select("#likeDIV").style("visibility","hidden");  
                     d3.select("#dislikeDIV").style("visibility","hidden");
                 }
@@ -191,11 +190,11 @@ function PlaceLayer(places , map) {
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
                 var parseOperation = new ParseOperation();
-                console.log(login);
+                //console.log(login);
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
-                    //console.log("like="+d.x);
-                    //console.log("like="+d.y);
+                    console.log("like="+d.x);
+                    console.log("like="+d.y);
                     if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to like");
                         Parse.User.current().set(d.place_id,"like");
