@@ -12,6 +12,7 @@ function ParseOperation() {
         success: function(results) {
 
           if (results.length === 0) {
+              console.log("create new places");
               var population = (like)?1:-1;
               createPlaceObj(place_id , population , function(object) {
               modifyLikeSet(object , like);
@@ -19,6 +20,7 @@ function ParseOperation() {
             });
             return;
           }
+          console.log("places already exist");
 
           var object = results[0];
 
@@ -29,6 +31,7 @@ function ParseOperation() {
             else if(exist && !like)
               value = -1;
             object.increment("popular" , value);
+            console.log("like check value: " + value);
             object.save();
             callback(value);
           });
@@ -39,6 +42,7 @@ function ParseOperation() {
             else if(exist && like)
               value = 1;
             object.increment("popular" , value);
+            console.log("dislike check value: " + value);
             object.save();
             callback(value);
           });
