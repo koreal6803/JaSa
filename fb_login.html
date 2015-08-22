@@ -77,6 +77,7 @@
           document.getElementById('status').innerHTML = 'Please log ' +
           'into Facebook.';
         }
+        login = response.status;
       }
 
       // This function is called when someone finishes with the Login
@@ -145,6 +146,7 @@
   </body>
   <script>
     var map;
+    var login;
     Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
 
     function initialize() {

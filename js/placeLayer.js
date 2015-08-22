@@ -175,7 +175,8 @@ function PlaceLayer(places , map) {
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
                 var parseOperation = new ParseOperation();
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
+                console.log("status : " + login);
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === 'connected')
                 {
                     parseOperation.setPopular(d.place_id, 1);  
                     for (var i in _places ) {
@@ -187,7 +188,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300)
+                else if(absLength>300 && login === 'conntected')
                 {
 
                     console.log(likeDIV);
