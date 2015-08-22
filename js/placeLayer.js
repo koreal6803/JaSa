@@ -193,14 +193,62 @@ function PlaceLayer(places , map) {
                 //console.log(login);
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
+                    ///
+                    var liked;
+                    var disliked;
+                    var relation = user_object.relation("likes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        liked = true;
+                                    }
+                                    else {
+                                        liked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
 
+                        } 
+                    });
+                    /// disliked list
+                    relation = user_object.relation("dislikes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        disliked = true;
+                                    }
+                                    else {
+                                        disliked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    ///
+                
                     //console.log("like="+d.x);
                     //console.log("like="+d.y);
-                    if (user_object.get(d.place_id) === undefined) {
-
+                    if (liked === false && disliked === false) { // undefine this place before
                         console.log("decide to like");
-                        user_object.set(d.place_id,"like");
-                        user_object.save();
                         parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
@@ -210,10 +258,8 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (user_object.get(d.place_id) === "dislike") {
+                    } else if (liked === false && disliked === true) {
                         console.log("decide to like from dislike");
-                        user_object.set(d.place_id,"like");
-                        user_object.save();
                         parseOperation.setPopular(d.place_id, 1);  
                         parseOperation.setPopular(d.place_id, 1);
                         for (var i in _places ) {
@@ -232,11 +278,62 @@ function PlaceLayer(places , map) {
                     //console.log(likeDIV);
                     //console.log(dislikeDIV);
                     ////console.log("dislike="+d.x);
-                    console.log("dislike="+d.y);
-                    if (user_object.get(d.place_id) === undefined) {
+                    //console.log("dislike="+d.y);
+
+                    ///
+                    var liked;
+                    var disliked;
+                    var relation = user_object.relation("likes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        liked = true;
+                                    }
+                                    else {
+                                        liked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    /// disliked list
+                    relation = user_object.relation("dislikes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        disliked = true;
+                                    }
+                                    else {
+                                        disliked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    ///
+
+                    if (liked === false && disliked === false) { 
                         console.log("decide to dislike")
-                        user_object.set(d.place_id,"dislike");
-                        user_object.save();
                         parseOperation.setPopular(d.place_id, 2);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
@@ -246,10 +343,8 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (user_object.get(d.place_id) === "like") {
+                    } else if (liked === true && disliked === false) {
                         console.log("decide to dislike from like")
-                        user_object.set(d.place_id,"dislike");
-                        user_object.save();
                         parseOperation.setPopular(d.place_id, 2);  
                         parseOperation.setPopular(d.place_id, 2);
                         for (var i in _places ) {

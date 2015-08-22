@@ -92,44 +92,7 @@
                  success: function(user) {
                      console.log(user);
                      ///
-
-                     var UserObject = Parse.Object.extend("fb_user");
-                     var query = new Parse.Query(UserObject);
-                     //var finalCase = 0;
-                     query.equalTo("user_id",user.get("id"));
-                     query.find({
-                         success: function(results) {
-                             if (results.length > 0) {
-                                 //var PopularObject = Parse.Object.extend("fb_user");
-                                 //var query = new Parse.Query(PopularObject);
-                                 //query.equalTo("_id",place_id);
-                                 //query.find({
-                                      //success: function(results) {
-                                 console.log("Successfully retrieved " + results.length + " scores.");
-                                      // Do something with the returned Parse.Object values
-                                 user_object = results[0];
-                       
-                             }
-                             else {
-                                 var UserObject = Parse.Object.extend("fb_user");
-                                 var user_object = new UserObject();
-                                 user_object.set("user_id", user.get("id"));
-            
-                                 user_object.save(null, {
-                                    success: function(object) {
-                                        console.log('New object created with objectId: ' + user_Object.id);
-                                    },
-                                    error: function(model, error) {
-                                        alert('Failed to create new object, with error code: ' + error.message);
-                                    }
-                                });
-                             }
-                        },
-                        error: function(error) {
-                            alert("Error: " + error.code + " " + error.message);
-                        }
-                     });  
-
+                     user_object = user;
                      ///
                      login = true;
                  },

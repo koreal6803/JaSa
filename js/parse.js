@@ -1,8 +1,4 @@
 function ParseOperation() {
-  
-  var _returnBoolean;
-  var _places;
-
 
   this.setPopular = function(place_id, ari_type) {
     var PopularObject = Parse.Object.extend("place");
@@ -12,36 +8,34 @@ function ParseOperation() {
       query.find({
         success: function(results) {
           if (results.length > 0) {
-            var PopularObject = Parse.Object.extend("place");
-            var query = new Parse.Query(PopularObject);
-            query.equalTo("place_id",place_id);
-            query.find({
-              success: function(results) {
-                console.log("Successfully retrieved " + results.length + " scores.");
-                // Do something with the returned Parse.Object values
-                var object = results[0];
-                if (ari_type === 1)
+            var object = results[0];
+                if (ari_type === 1) {
                   object.increment("popular");
-                else
+                  addLikedPlace(object);
+                }
+                else {
                   object.set("popular", object.get("popular") - 1);
+                  removeLikedPlace(object);
+                }
                 object.save();
-               },
-              error: function(error) {
-                alert("Error: " + error.code + " " + error.message);
-              }
-            });          
+                
           }
           else {
             var PopularObject = Parse.Object.extend("place");
             var popularObject = new PopularObject();
             popularObject.set("place_id", place_id);
-            if (ari_type == 1)
+            if (ari_type == 1) {
               popularObject.set("popular", 1);
-            else
+              addLikedPlace(object);
+            }
+            else {
               popularObject.set("popular", 0);
+              removeLikedPlace(object);
+            }
             popularObject.save(null, {
               success: function(object) {
                 console.log('New object created with objectId: ' + popularObject.id);
+                addLikedPlace(object);
               },
               error: function(model, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
@@ -73,15 +67,28 @@ function ParseOperation() {
         }
       });
   }
-  this.onReturnBoolean = function(callback) {
-    _returnBoolean = callback;
-  }
-  
+
   this.addPopular = function(place_id) {
     this.setPopular(place_id, this.getPopular(place_id) + 1);
   }
 
   this.minusPopular = function(place_id) {
     this.setPopular(place_id, this.getPopular(place_id) - 1);
+  }
+
+  function addLikedPlace (place) {
+    var likeSet = user_object.relation("likes");
+    likeSet.add(place);
+    var dislikeSet = user_object.relation("dislikes");
+    dislikeSet.remove(place);
+    user_object.save();
+  }
+
+  function removeLikedPlace (place) {
+    var dislikeSet = user_object.relation("dislikes");
+    dislikeSet.add(place);
+    var likeSet = user_object.relation("likes");
+    likeSet.remove(place);
+    user_object.save();
   }
 }
