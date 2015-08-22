@@ -23,7 +23,7 @@ function CenterControl(controlDiv, map, d) {
   controlText.innerHTML = '<h3 style="color:blue;line-height:1.5em;font-size:2.5em;margin:0.2em;padding:0">' + d.name + "<h3>" + 
                           '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_phone_number + "</h5>" +
                           '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_address + "</h5>"+
-                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em"><a href="https://maps.google.com/maps?saddr=&daddr='+d.formatted_address+'">開始導航</a></h5>';
+                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em"><a href="https://maps.google.com/maps?saddr=&daddr='+d.formatted_address+'" target="view_window">開始導航</a></h5>';
 
   if(d.opening_hours !== undefined) {
      var day = new Date();
