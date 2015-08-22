@@ -191,12 +191,14 @@ function PlaceLayer(places , map) {
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
                 var parseOperation = new ParseOperation();
+                console.log(login);
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
+                    //console.log("like="+d.x);
+                    //console.log("like="+d.y);
                     if (Parse.User.current().get(d.place_id) === undefined) {
-                        Parse.User.current().set(d.place,"like");
+                        console.log("decide to like");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
@@ -208,7 +210,8 @@ function PlaceLayer(places , map) {
                             }
                         }
                     } else if (Parse.User.current().get(d.place_id) === "dislike") {
-                        Parse.User.current().set(d.place,"like");
+                        console.log("decide to like from dislike");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         parseOperation.setPopular(d.place_id, 1);
@@ -225,12 +228,13 @@ function PlaceLayer(places , map) {
                 else if(absLength>300 && login === true)
                 {
 
-                    console.log(likeDIV);
-                    console.log(dislikeDIV);
-                    console.log("dislike="+d.x);
+                    //console.log(likeDIV);
+                    //console.log(dislikeDIV);
+                    ////console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
                     if (Parse.User.current().get(d.place_id) === undefined) {
-                        Parse.User.current().set(d.place,"dislike");
+                        console.log("decide to dislike")
+                        Parse.User.current().set(d.place_id,"dislike");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         for (var i in _places ) {
@@ -242,7 +246,8 @@ function PlaceLayer(places , map) {
                             }
                         }
                     } else if (Parse.User.current().get(d.place_id) === "like") {
-                        Parse.User.current().set(d.place,"dislike");
+                        console.log("decide to dislike from like")
+                        Parse.User.current().set(d.place_id,"dislike");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         parseOperation.setPopular(d.place_id, 2);
