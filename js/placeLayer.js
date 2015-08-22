@@ -174,8 +174,6 @@ function PlaceLayer(places , map) {
                 d3.select("#likeDIV").style("visibility","hidden");  
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
-
-
                 var parseOperation = new ParseOperation();
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
@@ -207,7 +205,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                //map.set('draggable',true);
+                map.set('draggable',true);
             });
 
         // add new nodes
