@@ -165,7 +165,7 @@ function PlaceLayer(places , map) {
                     d3.select("#likeDIV").style("opacity","0.7");
                     d3.select("#dislikeDIV").style("opacity","1");
                 }                
-                if(absLength>300){
+                if(absLength>150){
                     //console.log("drag="+d.x);
                     //console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
@@ -191,7 +191,7 @@ function PlaceLayer(places , map) {
 
                 var parseOperation = new ParseOperation();
                 //console.log(login);
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
+                if(absLength>150 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
                     ///
                     var liked;
@@ -272,7 +272,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300 && login === true)
+                else if(absLength>150 && login === true)
                 {
 
                     //console.log(likeDIV);

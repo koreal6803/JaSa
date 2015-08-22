@@ -1,6 +1,15 @@
 * {
   box-sizing: border-box; }
 
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #606c71; }
+
+
 .page-header {
   height: 10%;
   color: #fff;
@@ -32,6 +41,12 @@
   height: 100%;
 }
 
+
+#headerDIV{
+
+
+
+}
 #guideDIV {
   position: relative;
   left:0; top:0;
@@ -79,55 +94,70 @@
 
 #likeIMG {
   position: absolute;
-  width:450px;
-  height:450px;
+   width:250px;
+  height:250px;
   left:0;
-  top:100px;
+  top:50%;
+  margin-top:-125px;
   display: inline-block;
-  padding-top: 25px;
-  padding-right: 50px;
-  padding-bottom: 25px;
-  animation: 0.75s likeMOVE infinite ;
-  animation-timing-function:ease-in-out;
-  animation-play-state:paused;
+    padding-top: 25px;
+    padding-right: 50px;
+    padding-bottom: 25px;
+    animation: 0.75s likeMOVE infinite ;
+    animation-timing-function:ease-in-out;
+    animation-play-state:paused;
+
+    -webkit-animation: 0.75s likeMOVE infinite ;
+    -webkit-animation-timing-function:ease-in-out;
+    -webkit-animation-play-state:paused;
 }
 
 #dislikeIMG {
   position: absolute;
-   width:450px;
-  height:450px; 
+   width:250px;
+  height:250px; 
   right:0;
-  top:250px;
+  top:50%;
+  margin-top:-125px;
   display: inline-block;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  padding-left: 50px;
-  animation: 0.75s dislikeMOVE infinite ;
-  animation-timing-function:ease-in-out;
-  animation-play-state:paused;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 50px;
+    animation: 0.75s dislikeMOVE infinite ;
+    animation-timing-function:ease-in-out;
+    animation-play-state:paused;
+    
+    -webkit-animation: 0.75s dislikeMOVE infinite ;
+    -webkit-animation-timing-function:ease-in-out;
+    -webkit-animation-play-state:paused;  
 }
 @keyframes likeMOVE {
   from {
-      top:250px;
+  top: 50%;
   }
+  
   30% {
-      top:200px;
+  top:30%;
   }
+  
   to {
-      top:250px;
+  top:50%;
   }
 }
 @keyframes dislikeMOVE {
   from {
-      top:250px;
+  top:50%;
   }
+  
   30% {
-      top:300px;
+  top:70%;
   }
+  
   to {
-      top:250px;
+  top:50%;
   }
 }
+
 
 input[type=button] {padding:5px; border:2px solid #ccc; 
     -webkit-border-radius: 50%;
