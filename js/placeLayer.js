@@ -196,11 +196,11 @@ function PlaceLayer(places , map) {
                 {
                     //console.log("like="+d.x);
                     //console.log("like="+d.y);
-                    if (Parse.User.current().get(d.place_id) === undefined) {
+                    if (Parse.User.current().get("test") === undefined) {
                         console.log("decide to like");
-                        Parse.User.current().set(d.place_id,"like");
+                        Parse.User.current().set("test","like");
                         Parse.User.current().save();
-                        parseOperation.setPopular(d.place_id, 1);  
+                        parseOperation.setPopular("test", 1);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
                                 _places[i].radius += _popularUnit;
@@ -209,12 +209,12 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (Parse.User.current().get(d.place_id) === "dislike") {
+                    } else if (Parse.User.current().get("test") === "dislike") {
                         console.log("decide to like from dislike");
-                        Parse.User.current().set(d.place_id,"like");
+                        Parse.User.current().set("test","like");
                         Parse.User.current().save();
-                        parseOperation.setPopular(d.place_id, 1);  
-                        parseOperation.setPopular(d.place_id, 1);
+                        parseOperation.setPopular("test", 1);  
+                        parseOperation.setPopular("test", 1);
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
                                 _places[i].radius += _popularUnit * 2;
@@ -232,6 +232,7 @@ function PlaceLayer(places , map) {
                     //console.log(dislikeDIV);
                     ////console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
+                    console.
                     if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to dislike")
                         Parse.User.current().set(d.place_id,"dislike");
