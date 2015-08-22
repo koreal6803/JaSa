@@ -89,17 +89,13 @@
            if (response.status === 'connected') {}
            else {
              Parse.FacebookUtils.logIn(null, {
-            success: function(user) {
-                if (!user.existed()) {
-                    console.log("Cr");
-                } else {
-                    console.log("Ex");
-                }     
-            },
-            error: function(user, error) {
-               alert("User cancelled the Facebook login or did not fully authorize.");
-            }
-        });
+                 success: function(user) {
+                     current_user = user;
+                 },
+                 error: function(user, error) {
+                   alert("User cancelled the Facebook login or did not fully authorize.");
+                 }
+             });
            }
        });
        
