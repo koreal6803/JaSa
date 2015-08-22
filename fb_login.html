@@ -89,7 +89,7 @@
              Parse.FacebookUtils.logIn(null, {
                  success: function(user) {
                      user_object = user;
-
+                     console.log(user);
                      FB.api('/me', function(response) {
                          console.log('Successful login for: ' + response.name);
                          document.getElementById('login_button').innerHTML =
