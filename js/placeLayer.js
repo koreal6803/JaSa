@@ -149,36 +149,42 @@ function PlaceLayer(places , map) {
             .each(nodeInitialTransition)
             //.call(this.force.drag());
 
-        var startX,startY;
+        var startX,startY,absLength;
         var dragEvent = this.force.drag()
             .on("dragstart", function(d,i){
-                console.log("dragstart="+d.x);
-                console.log("dragstart="+d.y);
                 startX=d.x;
                 startY=d.y;
+                console.log("dragstart startX="+d.x);
+                console.log("dragstart startY="+d.y);                
 
             })
             .on("drag", function(d) {
-                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>200 ){
+                absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
+                if(absLength>300){
                     console.log("drag="+d.x);
                     console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
                     d3.select("#dislikeDIV").style("visibility","visible");
                 }
-                else if (absLength < 180) {
+                else{
+                    console.log("startX="+startX);
+                    console.log("startY="+startY);
+                    console.log("d.x="+d.x);
+                    console.log("d.x="+d.y);
+                    console.log("hidden absLength ="+absLength);
                     d3.select("#likeDIV").style("visibility","hidden");  
                     d3.select("#dislikeDIV").style("visibility","hidden");
                 }
 
             })
             .on("dragend", function(d) {
-                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                //var likeDIV= d3.select("#likeDIV");
-                //var dislikeDIV= d3.select("#dislikeDIV");
-                    d3.select("#likeDIV").style("visibility","hidden");  
-                    d3.select("#dislikeDIV").style("visibility","hidden");
-                if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
+                absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
+
+                d3.select("#likeDIV").style("visibility","hidden");  
+                d3.select("#dislikeDIV").style("visibility","hidden");
+
+
+                if(absLength>300 &&　d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
                     console.log(likeDIV);
                     console.log(dislikeDIV);
@@ -186,13 +192,16 @@ function PlaceLayer(places , map) {
                     console.log("like="+d.x);
                     console.log("like="+d.y);
                 }
-                else if(absLength>200)
+                else
                 {
                     console.log(likeDIV);
                     console.log(dislikeDIV);
                     console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
-                }
+                }                    
+                
+
+
                 //console.log(d);
             });
         // add new nodes
@@ -217,6 +226,7 @@ function PlaceLayer(places , map) {
                .style('height'     ,  (d.radius *3) + 'px' )
                .style('margin-left', ' -' + d.radius*1.5 + 'px' )
                .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
+               console.log("mouseover_HERE!");
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
@@ -231,13 +241,12 @@ function PlaceLayer(places , map) {
                 _onClickNode(d);
             })
 
-            .on("drag", function(d,i) {
-                var t = d3.select(this);
-                //turn {x: t.attr("x"), y: t.attr("y")};
-                console.log(t.attr("x"));
-                console.log(d.attr("y"));
-                
-            });
+            // .on("drag", function(d,i) {
+            //     var t = d3.select(this);
+            //     //turn {x: t.attr("x"), y: t.attr("y")};
+            //     console.log(t.attr("x"));
+            //     console.log(d.attr("y"));  
+            // });
 
 
 
