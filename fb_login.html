@@ -86,11 +86,8 @@
       function checkLoginState() {
         Parse.FacebookUtils.logIn(null, {
           success: function(user) {
-            if (!user.existed()) {
-              alert("User signed up and logged in through Facebook!");
-            } else {
-              alert("User logged in through Facebook!");
-            }
+            login = true;
+            current_user = user;
             //Parse.FacebookUtils.getLoginStatus(function(response) {
             //  statusChangeCallback(response);
             //});
@@ -159,7 +156,8 @@
   </body>
   <script>
     var map;
-    var login;
+    var login = false;
+    var current_user;
     Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
 
     function initialize() {

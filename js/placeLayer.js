@@ -176,7 +176,7 @@ function PlaceLayer(places , map) {
 
                 var parseOperation = new ParseOperation();
                 console.log("status : " + login);
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width) //&& login === 'connected')
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
                     parseOperation.setPopular(d.place_id, 1);  
                     for (var i in _places ) {
@@ -188,7 +188,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300)// && login === 'connected')
+                else if(absLength>300 && login === true)
                 {
 
                     console.log(likeDIV);
