@@ -85,7 +85,10 @@
     }(document, 'script', 'facebook-jssdk'));
 
     function fbLogin(){
-        Parse.FacebookUtils.logIn(null, {
+       FB.getLoginStatus(function(response) {
+           if (response.status === 'connected') {}
+           else {
+             Parse.FacebookUtils.logIn(null, {
             success: function(user) {
                 if (!user.existed()) {
                     console.log("Cr");
@@ -97,6 +100,9 @@
                alert("User cancelled the Facebook login or did not fully authorize.");
             }
         });
+           }
+       });
+       
     }
 ///
     function initialize() {
