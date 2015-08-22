@@ -162,8 +162,8 @@ body {
 input[type=button] {padding:5px; border:2px solid #ccc; 
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     color: white;
     background: black;
     border-style: solid;
@@ -172,8 +172,8 @@ input[type=button] {padding:5px; border:2px solid #ccc;
     padding: 0;
     margin: 0;
     position: absolute;
-    left:-15px;
-    top:-15px;
+    left:-25px;
+    top:-25px;
 }
 
 html, body, #map-canvas {
