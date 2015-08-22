@@ -140,36 +140,44 @@ function PlaceLayer(places , map) {
             .attr('class', 'node')
             .each(nodeInitialTransition)
 
-        var startX,startY;
+        var startX,startY,absLength;
         var dragEvent = this.force.drag()
             .on("dragstart", function(d,i){
-                console.log("dragstart="+d.x);
-                console.log("dragstart="+d.y);
                 startX=d.x;
                 startY=d.y;
+                console.log("dragstart startX="+d.x);
+                console.log("dragstart startY="+d.y);                
 
             })
             .on("drag", function(d) {
-                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
-                if(absLength>200 ){
+                absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
+                if(absLength>300){
                     console.log("drag="+d.x);
                     console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
                     d3.select("#dislikeDIV").style("visibility","visible");
                 }
-                else if (absLength < 180) {
+                else{
+                    console.log("startX="+startX);
+                    console.log("startY="+startY);
+                    console.log("d.x="+d.x);
+                    console.log("d.x="+d.y);
+                    console.log("hidden absLength ="+absLength);
                     d3.select("#likeDIV").style("visibility","hidden");  
                     d3.select("#dislikeDIV").style("visibility","hidden");
                 }
 
             })
             .on("dragend", function(d) {
-                var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
+                absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
 
                 d3.select("#likeDIV").style("visibility","hidden");  
                 d3.select("#dislikeDIV").style("visibility","hidden");
+
+
+
                 var parseOperation = new ParseOperation();
-                if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
                     parseOperation.setPopular(d.place_id, 1);  
                     for (var i in _places ) {
@@ -181,8 +189,14 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>200)
+                else if(absLength>300)
                 {
+
+                    console.log(likeDIV);
+                    console.log(dislikeDIV);
+                    console.log("dislike="+d.x);
+                    console.log("dislike="+d.y);
+
                     parseOperation.setPopular(d.place_id, 2);  
                     for (var i in _places ) {
                         if (d.place_id === _places[i].place_id) {
@@ -224,12 +238,14 @@ function PlaceLayer(places , map) {
                 
                     _onClickNode(d);
             })
-            .on("drag", function(d,i) {
-                var t = d3.select(this);
-                //turn {x: t.attr("x"), y: t.attr("y")};
-                console.log(t.attr("x"));
-                console.log(d.attr("y"));
-            });
+
+            // .on("drag", function(d,i) {
+            //     var t = d3.select(this);
+            //     //turn {x: t.attr("x"), y: t.attr("y")};
+            //     console.log(t.attr("x"));
+            //     console.log(d.attr("y"));  
+            // });
+
 
 
 

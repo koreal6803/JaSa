@@ -72,7 +72,7 @@ body {
 
   float:left;
 
- background:#A0A372;
+ background:#4FBE94;
 
 
 
@@ -89,7 +89,31 @@ opacity:0.7;
 
  float:left;
 
- background:#E1888B;
+ background:#ED5D54;
 
  z-index:1000000000;
+}
+
+#likeIMG {
+  position: absolute;
+   width:450px;
+  height:450px;
+  left:0;
+  top:200px;
+  display: inline-block;
+    padding-top: 25px;
+    padding-right: 50px;
+    padding-bottom: 25px;
+}
+
+#dislikeIMG {
+  position: absolute;
+   width:450px;
+  height:450px; 
+  right:0;
+  top:250px;
+  display: inline-block;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 50px;
 }
