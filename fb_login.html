@@ -120,8 +120,23 @@
         //
         // These three cases are handled in the callback function.
 
-        //Parse.FacebookUtils.getLoginStatus(function(response) {
-        //  statusChangeCallback(response);
+        FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    // the user is logged in and has authenticated your
+    // app, and response.authResponse supplies
+    // the user's ID, a valid access token, a signed
+    // request, and the time the access token 
+    // and signed request each expire
+    console.log("already" + Parse.User.current());
+  } else if (response.status === 'not_authorized') {
+     console.log("2");
+    // the user is logged in to Facebook, 
+    // but has not authenticated your app
+  } else {
+    console.log("3");
+    // the user isn't logged in to Facebook.
+  }
+ });
         //});
 
       };
