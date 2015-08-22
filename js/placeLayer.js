@@ -191,6 +191,7 @@ function PlaceLayer(places , map) {
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
                 var parseOperation = new ParseOperation();
+                console.log(login);
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
                     //console.log("like="+d.x);
