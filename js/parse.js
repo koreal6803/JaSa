@@ -5,6 +5,7 @@ function ParseOperation() {
 
   this.setPopular = function(place_id, like , callback) {
     
+    console.log("likd: "+like);
     var query = new Parse.Query(Place);
     var finalCase = 0;
       query.equalTo("place_id",place_id);
@@ -92,9 +93,11 @@ function ParseOperation() {
       success: function(list) {
         // list contains the posts that the current user likes.
         var exist = false;
+        var index = null;
         for(var i in list) {
           if (list[i].get("place_id") == place.get("place_id")) {
             exist = true;
+            index = i;
             break;
           }
         }
@@ -105,7 +108,7 @@ function ParseOperation() {
         if(!exist && like)
           likeSet.add(place);
         else if(exist && !like)
-          likeSet.remove(place);
+          likeSet.remove(list[index]);
         user_object.save();
       }
     });
@@ -118,9 +121,11 @@ function ParseOperation() {
       success: function(list) {
         // list contains the posts that the current user likes.
         var exist = false;
+        var index = null;
         for(var i in list) {
           if (list[i].get("place_id") == place.get("place_id")) {
             exist = true;
+            index = i;
             break;
           }
         }
@@ -131,7 +136,7 @@ function ParseOperation() {
         if(!exist && !like)
           dislikeSet.add(place);
         else if(exist && like)
-          dislikeSet.remove(place);
+          dislikeSet.remove(list[index]);
         user_object.save();
       }
     });
