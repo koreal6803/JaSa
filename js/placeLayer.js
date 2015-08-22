@@ -196,14 +196,30 @@ function PlaceLayer(places , map) {
                 {
                     console.log("like="+d.x);
                     console.log("like="+d.y);
-
-                    parseOperation.setPopular(d.place_id, 1);  
-                    for (var i in _places ) {
-                        if (d.place_id === _places[i].place_id) {
-                            _places[i].radius += _popularUnit;
-                            _obj.updateLayout();
-                            _obj.force.start();
-                            break;
+                    if (Parse.User.current().get(d.place_id) === undefined) {
+                        Parse.User.current().set(d.place,"like");
+                        Parse.User.current().save();
+                        parseOperation.setPopular(d.place_id, 1);  
+                        for (var i in _places ) {
+                            if (d.place_id === _places[i].place_id) {
+                                _places[i].radius += _popularUnit;
+                                _obj.updateLayout();
+                                _obj.force.start();
+                                break;
+                            }
+                        }
+                    } else if (Parse.User.current().get(d.place_id) === "dislike") {
+                        Parse.User.current().set(d.place,"like");
+                        Parse.User.current().save();
+                        parseOperation.setPopular(d.place_id, 1);  
+                        parseOperation.setPopular(d.place_id, 1);
+                        for (var i in _places ) {
+                            if (d.place_id === _places[i].place_id) {
+                                _places[i].radius += _popularUnit * 2;
+                                _obj.updateLayout();
+                                _obj.force.start();
+                                break;
+                            }
                         }
                     }
                 }
@@ -214,14 +230,30 @@ function PlaceLayer(places , map) {
                     console.log(dislikeDIV);
                     console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
-
-                    parseOperation.setPopular(d.place_id, 2);  
-                    for (var i in _places ) {
-                        if (d.place_id === _places[i].place_id) {
-                            _places[i].radius -= _popularUnit;
-                            _obj.updateLayout();
-                            _obj.force.start();
-                            break;
+                    if (Parse.User.current().get(d.place_id) === undefined) {
+                        Parse.User.current().set(d.place,"dislike");
+                        Parse.User.current().save();
+                        parseOperation.setPopular(d.place_id, 2);  
+                        for (var i in _places ) {
+                            if (d.place_id === _places[i].place_id) {
+                                _places[i].radius -= _popularUnit;
+                                _obj.updateLayout();
+                                _obj.force.start();
+                                break;
+                            }
+                        }
+                    } else if (Parse.User.current().get(d.place_id) === "like") {
+                        Parse.User.current().set(d.place,"dislike");
+                        Parse.User.current().save();
+                        parseOperation.setPopular(d.place_id, 2);  
+                        parseOperation.setPopular(d.place_id, 2);
+                        for (var i in _places ) {
+                            if (d.place_id === _places[i].place_id) {
+                                _places[i].radius -= _popularUnit * 2;
+                                _obj.updateLayout();
+                                _obj.force.start();
+                                break;
+                            }
                         }
                     }
                 }
