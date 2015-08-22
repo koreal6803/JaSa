@@ -245,9 +245,8 @@ html, body, #map-canvas {
     vertical-align: middle;
     word-break: break-all;
     color: #333333;
-    font-weight: 400;
     font-size: 1.5em;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 
