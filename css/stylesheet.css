@@ -102,9 +102,9 @@ body {
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
-    animation: 1s likeMOVE infinite ;
+    animation: 0.75s likeMOVE infinite ;
     animation-timing-function:ease-in-out;
-    animation-delay: 1s ;
+    animation-play-state:paused;
 }
 
 #dislikeIMG {
@@ -117,44 +117,33 @@ body {
     padding-top: 25px;
     padding-bottom: 25px;
     padding-left: 50px;
-    animation: 1s dislikeMOVE infinite ;
+    animation: 0.75s dislikeMOVE infinite ;
     animation-timing-function:ease-in-out;
+    animation-play-state:paused;
 }
 @keyframes likeMOVE {
   from {
-   width:450px;
-  height:450px; 
   top:250px;
   }
   
   30% {
-   width:465px;
-  height:465px;
   top:200px;
   }
   
   to {
-   width:450px;
-  height:450px;
   top:250px;
   }
 }
 @keyframes dislikeMOVE {
   from {
-   width:450px;
-  height:450px; 
   top:250px;
   }
   
   30% {
-   width:465px;
-  height:465px;
   top:300px;
   }
   
   to {
-   width:450px;
-  height:450px; 
   top:250px;
   }
 }
