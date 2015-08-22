@@ -55,7 +55,7 @@
  
 
     </div>
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="position:absolute; right:0px; top:25px">
+    <fb:login-button scope="public_profile,email" onclick="fblogin();" style="position:absolute; right:0px; top:25px">
     </fb:login-button>
 
     <div id="status" style="color:white; position:absolute; right:0px; top:50px">
@@ -90,7 +90,20 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    
+    function fbLogin(){
+        Parse.FacebookUtils.logIn(null, {
+            success: function(user) {
+                if (!user.existed()) {
+                    console.log("Cr");
+                } else {
+                    console.log("Ex");
+                }     
+            },
+            error: function(user, error) {
+               alert("User cancelled the Facebook login or did not fully authorize.");
+            }
+        });
+    }
 ///
     function initialize() {
 
