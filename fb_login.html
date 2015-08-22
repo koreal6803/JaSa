@@ -59,8 +59,7 @@
   </body>
   <script>
     var map;
-    var login = false;
-    var user_object;
+    var user_object = null;
     Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
    
 ///
@@ -90,11 +89,7 @@
            //else {
              Parse.FacebookUtils.logIn(null, {
                  success: function(user) {
-                     console.log(user);
-                     ///
                      user_object = user;
-                     ///
-                     login = true;
                  },
                  error: function(user, error) {
                    alert("User cancelled the Facebook login or did not fully authorize.");
