@@ -194,15 +194,17 @@ function PlaceLayer(places , map) {
                 console.log(like);
                 var valid = absLength > 150;
                 if(valid) {
-                    parseOperation.setPopular(d.place_id, like);
-                    for (var i in _places ) {
-                        if (d.place_id === _places[i].place_id) {
-                            _places[i].radius += (like)?_popularUnit:-1*_popularUnit;
-                            _obj.updateLayout();
-                            _obj.force.start();
-                            break;
+                    parseOperation.setPopular(d.place_id, like, function(value){
+                        for (var i in _places ) {
+                            if (d.place_id === _places[i].place_id) {
+                                _places[i].radius += _popularUnit*value;
+                                _obj.updateLayout();
+                                _obj.force.start();
+                                break;
+                            }
                         }
-                    }
+                    });
+
                 }
                 map.set('draggable',true);
             });

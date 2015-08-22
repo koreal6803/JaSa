@@ -3,7 +3,7 @@ function ParseOperation() {
   var Place = Parse.Object.extend("place");
 
 
-  this.setPopular = function(place_id, like) {
+  this.setPopular = function(place_id, like , callback) {
     
     var query = new Parse.Query(Place);
     var finalCase = 0;
@@ -23,18 +23,24 @@ function ParseOperation() {
           var object = results[0];
 
           modifyLikeSet(object , like , function(exist) {
+            var value = 0;
             if(!exist && like)
-              object.increment("popular" , 1);
+              value = 1;
             else if(exist && !like)
-              object.increment("popular" , -1);
+              value = -1;
+            object.increment("popular" , value);
             object.save();
+            callback(value);
           });
           modifyDislikeSet(object , like , function(exist) {
+            var value = 0;
             if(!exist && !like)
-              object.increment("popular" , -1);
+              value = -1;
             else if(exist && like)
-              object.increment("popular" , 1);
+              value = 1;
+            object.increment("popular" , value);
             object.save();
+            callback(value);
           });
         },
         error: function(error) {
