@@ -102,10 +102,11 @@ function ParseOperation() {
         if(callback !== undefined)
           callback(exist);
 
-        if(!exist && like) {
+        if(!exist && like)
           likeSet.add(place);
-          user_object.save();
-        }
+        else if(exist && !like)
+          likeSet.remove(place);
+        user_object.save();
       }
     });
   }
@@ -127,10 +128,11 @@ function ParseOperation() {
         if(callback !== undefined)
           callback(exist);
 
-        if(!exist && !like) {
+        if(!exist && !like)
           dislikeSet.add(place);
-          user_object.save();
-        }
+        else if(exist && like)
+          dislikeSet.remove(place);
+        user_object.save();
       }
     });
   }
