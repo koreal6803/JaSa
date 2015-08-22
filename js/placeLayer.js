@@ -190,7 +190,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300 && login === 'conntected')
+                else if(absLength>300 && login === 'connected')
                 {
 
                     console.log(likeDIV);
