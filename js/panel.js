@@ -22,13 +22,16 @@ function CenterControl(controlDiv, map, d) {
   controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
   controlText.innerHTML = '<h3 style="color:blue;line-height:1.5em;font-size:2.5em;margin:0.2em;padding:0">' + d.name + "<h3>" + 
                           '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_phone_number + "</h5>" +
-                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_address + "</h5>";
+                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_address + "</h5>"+
+                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em"><a herf="https://maps.google.com/maps?saddr=&daddr=' +  d.formatted_address + '">開始導航</a></h5>';
 
   if(d.opening_hours !== undefined) {
      var day = new Date();
      var text = d.opening_hours.weekday_text[day.getDay() - 1];
-     text = text.substring(4,text.length);
-     controlText.innerHTML += ('<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + text + "</h5>");
+     if(text !== undefined) {
+         text = text.substring(4,text.length);
+         controlText.innerHTML += ('<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + text + "</h5>");
+     }
   }
   
   if(d.photos !== undefined) {
