@@ -178,7 +178,7 @@ function PlaceLayer(places , map) {
 
                 var parseOperation = new ParseOperation();
                 console.log("status : " + login);
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === 'conntected')
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === 'connected')
                 {
                     parseOperation.setPopular(d.place_id, 1);  
                     for (var i in _places ) {
