@@ -190,10 +190,9 @@ function PlaceLayer(places , map) {
                 d3.select("#likeDIV").style("visibility","hidden");  
                 d3.select("#dislikeDIV").style("visibility","hidden");
 
-
-
                 var parseOperation = new ParseOperation();
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
+                console.log("status : " + login);
+                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width) //&& login === 'connected')
                 {
                     console.log("like="+d.x);
                     console.log("like="+d.y);
@@ -208,7 +207,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300)
+                else if(absLength>300)// && login === 'connected')
                 {
 
                     console.log(likeDIV);
@@ -226,7 +225,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                //map.set('draggable',true);
+                map.set('draggable',true);
             });
 
         // add new nodes
