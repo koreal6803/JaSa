@@ -216,11 +216,11 @@ function PlaceLayer(places , map) {
                                 error: function(error) {
                                     alert("Error: " + error.code + " " + error.message);
                                 }
-                           });  
-                           error: function(error) {
+                            });
+                         },  
+                         error: function(error) {
                                     alert("Error: " + error.code + " " + error.message);
-                            }
-                        },
+                          }
 
                     });
                     /// disliked list
