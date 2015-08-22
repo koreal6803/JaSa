@@ -193,8 +193,8 @@ function PlaceLayer(places , map) {
                 var parseOperation = new ParseOperation();
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
+                    //console.log("like="+d.x);
+                    //console.log("like="+d.y);
                     if (current_user.get(d.place_id) === undefined) {
                         console.log("decide to like");
                         Parse.User.current().set(d.place,"like");
@@ -227,9 +227,9 @@ function PlaceLayer(places , map) {
                 else if(absLength>300 && login === true)
                 {
 
-                    console.log(likeDIV);
-                    console.log(dislikeDIV);
-                    console.log("dislike="+d.x);
+                    //console.log(likeDIV);
+                    //console.log(dislikeDIV);
+                    ////console.log("dislike="+d.x);
                     console.log("dislike="+d.y);
                     if (current_user.get(d.place_id) === undefined) {
                         console.log("decide to dislike")
@@ -245,7 +245,7 @@ function PlaceLayer(places , map) {
                             }
                         }
                     } else if (current_user.get(d.place_id) === "like") {
-                            console.log("decide to dislike from like")
+                        console.log("decide to dislike from like")
                         Parse.User.current().set(d.place,"dislike");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
