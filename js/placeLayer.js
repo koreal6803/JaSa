@@ -165,7 +165,7 @@ function PlaceLayer(places , map) {
                     d3.select("#likeDIV").style("opacity","0.7");
                     d3.select("#dislikeDIV").style("opacity","1");
                 }                
-                if(absLength>300){
+                if(absLength>150){
                     //console.log("drag="+d.x);
                     //console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
@@ -191,14 +191,64 @@ function PlaceLayer(places , map) {
 
                 var parseOperation = new ParseOperation();
                 //console.log(login);
-                if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
+                if(absLength>150 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
-                    console.log("like="+d.x);
-                    console.log("like="+d.y);
-                    if (Parse.User.current().get(d.place_id) === undefined) {
+                    ///
+                    var liked;
+                    var disliked;
+                    var relation = user_object.relation("likes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        liked = true;
+                                    }
+                                    else {
+                                        liked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    /// disliked list
+                    relation = user_object.relation("dislikes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        disliked = true;
+                                    }
+                                    else {
+                                        disliked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    ///
+                    console.log("1");
+                    //console.log("like="+d.x);
+                    //console.log("like="+d.y);
+                    if (liked === false && disliked === false) { // undefine this place before
                         console.log("decide to like");
-                        Parse.User.current().set(d.place_id,"like");
-                        Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
@@ -208,10 +258,8 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (Parse.User.current().get(d.place_id) === "dislike") {
+                    } else if (liked === false && disliked === true) {
                         console.log("decide to like from dislike");
-                        Parse.User.current().set(d.place_id,"like");
-                        Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         parseOperation.setPopular(d.place_id, 1);
                         for (var i in _places ) {
@@ -224,17 +272,68 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                else if(absLength>300 && login === true)
+                else if(absLength>150 && login === true)
                 {
 
                     //console.log(likeDIV);
                     //console.log(dislikeDIV);
                     ////console.log("dislike="+d.x);
-                    console.log("dislike="+d.y);
-                    if (Parse.User.current().get(d.place_id) === undefined) {
+                    //console.log("dislike="+d.y);
+
+                    ///
+                    var liked;
+                    var disliked;
+                    var relation = user_object.relation("likes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        liked = true;
+                                    }
+                                    else {
+                                        liked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    /// disliked list
+                    relation = user_object.relation("dislikes");
+                    relation.query().find({
+                        success: function(list) {
+                            // list contains the places that the current user likes.
+                            var PopularObject = Parse.Object.extend("place");
+                            var query = new Parse.Query(PopularObject);
+                            query.equalTo("place_id",d.place_id);
+                            query.find({
+                                success: function(results) {
+                                    if (results.length > 0) {
+                                        disliked = true;
+                                    }
+                                    else {
+                                        disliked = false;
+                                   }
+                                },
+                                error: function(error) {
+                                    alert("Error: " + error.code + " " + error.message);
+                                }
+                           });  
+
+                        } 
+                    });
+                    ///
+                    console.log("2");
+                    if (liked === false && disliked === false) { 
                         console.log("decide to dislike")
-                        Parse.User.current().set(d.place_id,"dislike");
-                        Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
@@ -244,10 +343,8 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (Parse.User.current().get(d.place_id) === "like") {
+                    } else if (liked === true && disliked === false) {
                         console.log("decide to dislike from like")
-                        Parse.User.current().set(d.place_id,"dislike");
-                        Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         parseOperation.setPopular(d.place_id, 2);
                         for (var i in _places ) {
