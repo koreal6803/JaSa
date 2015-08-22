@@ -107,8 +107,9 @@ function PlaceLayer(places , map) {
     // google map api will call this function when initial and zooming
     this.draw = function () {
         // projection is used for convert lat and lng to x and y, respectively
+        console.log('draw');
+        _overlayLayer.style("visibility", 'hidden');
         _projection = this.getProjection();
-        _obj.updateLayout();
 
         // convert lat and lng of a position to x and y using projection
         convertLatLng(_places);
@@ -275,6 +276,7 @@ function PlaceLayer(places , map) {
                     _obj.force.stop();
                     _obj.updateLayout();
                     _obj.force.start();
+                    _overlayLayer.style('visibility','visible');
                 }
             });
         }
