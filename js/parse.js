@@ -4,7 +4,8 @@ function ParseOperation() {
 
 
   this.setPopular = function(place_id, like , callback) {
-    
+    if(user_object === null)
+      return;
     console.log("likd: "+like);
     var query = new Parse.Query(Place);
     var finalCase = 0;
