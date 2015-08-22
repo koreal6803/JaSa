@@ -67,6 +67,26 @@ function PlaceLayer(places , map) {
             .size([this.getPanes().overlayLayer.scrollWidth, this.getPanes().overlayLayer.scrollHeight])
             .linkDistance(this.getPanes().overlayLayer.scrollWidth/15);
 
+        // setting force layout for tick event (animation)
+        var drawCnt = 0;
+        this.force.on('tick', function(e) {
+
+            // prevent overlaped nodes
+            var q = d3.geom.quadtree(_nodes),
+              i = 0,
+              n = _nodes.length;
+
+            for(var i = _places.length; i < _nodes.length ; i++) {
+                q.visit(collide(_nodes[i]));
+            }
+
+            // redering nodes
+            if(drawCnt++%3 === 0) { // reduce frame-rate
+                _selectionNode.each(nodeTransition);
+                _selectionEdge.each(edgeTransition);
+            }
+        });
+
         // setup google map undraggable or draggable depending on overlayLayer event
         google.maps.event.addDomListener(_overlayLayer[0][0], 'click', function(e) {
             console.log('click');
@@ -88,55 +108,12 @@ function PlaceLayer(places , map) {
     this.draw = function () {
         // projection is used for convert lat and lng to x and y, respectively
         _projection = this.getProjection();
+        _obj.updateLayout();
 
         // convert lat and lng of a position to x and y using projection
         convertLatLng(_places);
-
-        this.force.stop();
-        
-        // reset the link Distance because some nodes are too close when zoom out
-        var zoomLevel = map.getZoom();
-        console.log(zoomLevel);
-
-        // conver each data to divs (div is an visual object)
-        //this.updateLayout();
-
-        // start force direct
-        //this.force.start();
-
-        // setting force layout for tick event (animation)
-        var drawCnt = 0;
-        this.force.on('tick', function(e) {
-
-            // prevent overlaped nodes
-            var q = d3.geom.quadtree(_nodes),
-              i = 0,
-              n = _nodes.length;
-
-            for(var i = _places.length; i < _nodes.length ; i++) {
-                q.visit(collide(_nodes[i]));
-            }
-
-            // redering nodes
-            if(drawCnt++%3 === 0) { // reduce frame-rate
-                _selectionNode.each(nodeTransition);
-                _selectionEdge.each(edgeTransition);
-            }
-        });
     };
-/*
-    this.updateNodeSize = function (place) {
-        for( var i = _places.length ; i < _nodes.length ; i++) {
-            if(place.place_id == _nodes[i].place_id) {
-                _nodes[i].radius = 10;
-                console.log(d3.select(_nodes[i]));
-                d3.select(_nodes[i])
-                    .each(nodeInitialTransition);
-                break;
-            }
-        }
-    }
-*/
+
     // redraw the nodes and edges
     this.updateLayout = function () {
         createNodes(_nodes);
@@ -161,7 +138,6 @@ function PlaceLayer(places , map) {
             .data(_nodes)
             .attr('class', 'node')
             .each(nodeInitialTransition)
-            //.call(this.force.drag());
 
         var startX,startY;
         var dragEvent = this.force.drag()
@@ -216,7 +192,7 @@ function PlaceLayer(places , map) {
                         }
                     }
                 }
-                map.set('draggable',true);
+                //map.set('draggable',true);
             });
 
         // add new nodes
@@ -282,7 +258,11 @@ function PlaceLayer(places , map) {
         var cnt = datas.length;
         for(var i in datas) {
             parseOperation.getPopular(datas[i] , function(popular , data) {
-                data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
+                if(data.info.rating)
+                    data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
+                else
+                    data.radius = popular * _popularUnit + 10;
+                    
                 if(data.radius < 10)
                     data.radius = 10;
                 console.log(data);
