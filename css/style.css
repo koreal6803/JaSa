@@ -106,6 +106,10 @@ body {
     animation: 0.75s likeMOVE infinite ;
     animation-timing-function:ease-in-out;
     animation-play-state:paused;
+
+    -webkit-animation: 0.75s likeMOVE infinite ;
+    -webkit-animation-timing-function:ease-in-out;
+    -webkit-animation-play-state:paused;
 }
 
 #dislikeIMG {
@@ -122,6 +126,10 @@ body {
     animation: 0.75s dislikeMOVE infinite ;
     animation-timing-function:ease-in-out;
     animation-play-state:paused;
+    
+    -webkit-animation: 0.75s dislikeMOVE infinite ;
+    -webkit-animation-timing-function:ease-in-out;
+    -webkit-animation-play-state:paused;  
 }
 @keyframes likeMOVE {
   from {
