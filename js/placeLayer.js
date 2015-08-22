@@ -198,7 +198,7 @@ function PlaceLayer(places , map) {
                     //console.log("like="+d.y);
                     if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to like");
-                        Parse.User.current().set(d.place,"like");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
@@ -211,7 +211,7 @@ function PlaceLayer(places , map) {
                         }
                     } else if (Parse.User.current().get(d.place_id) === "dislike") {
                         console.log("decide to like from dislike");
-                        Parse.User.current().set(d.place,"like");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         parseOperation.setPopular(d.place_id, 1);
@@ -234,7 +234,7 @@ function PlaceLayer(places , map) {
                     console.log("dislike="+d.y);
                     if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to dislike")
-                        Parse.User.current().set(d.place,"dislike");
+                        Parse.User.current().set(d.place_id,"dislike");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         for (var i in _places ) {
@@ -247,7 +247,7 @@ function PlaceLayer(places , map) {
                         }
                     } else if (Parse.User.current().get(d.place_id) === "like") {
                         console.log("decide to dislike from like")
-                        Parse.User.current().set(d.place,"dislike");
+                        Parse.User.current().set(d.place_id,"dislike");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 2);  
                         parseOperation.setPopular(d.place_id, 2);
