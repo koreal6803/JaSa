@@ -87,7 +87,7 @@
         Parse.FacebookUtils.logIn(null, {
           success: function(user) {
             login = true;
-            current_user = user;
+            console.log(user);
             //Parse.FacebookUtils.getLoginStatus(function(response) {
             //  statusChangeCallback(response);
             //});
@@ -103,7 +103,7 @@
           appId      : '1642885569256712',
           cookie     : true,  // enable cookies to allow the server to access 
                               // the session
-          //status     : true,
+          status     : true,
           xfbml      : true,  // parse social plugins on this page
          version    : 'v2.2' // use version 2.2
         });
