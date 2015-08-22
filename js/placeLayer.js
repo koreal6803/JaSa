@@ -200,7 +200,7 @@ function PlaceLayer(places , map) {
                         console.log("decide to like");
                         Parse.User.current().set("test","like");
                         Parse.User.current().save();
-                        parseOperation.setPopular("test", 1);  
+                        parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
                                 _places[i].radius += _popularUnit;
@@ -213,8 +213,8 @@ function PlaceLayer(places , map) {
                         console.log("decide to like from dislike");
                         Parse.User.current().set("test","like");
                         Parse.User.current().save();
-                        parseOperation.setPopular("test", 1);  
-                        parseOperation.setPopular("test", 1);
+                        parseOperation.setPopular(d.place_id, 1);  
+                        parseOperation.setPopular(d.place_id, 1);
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
                                 _places[i].radius += _popularUnit * 2;
@@ -231,8 +231,8 @@ function PlaceLayer(places , map) {
                     //console.log(likeDIV);
                     //console.log(dislikeDIV);
                     ////console.log("dislike="+d.x);
-                    console.log("dislike="+d.y);
-                    console.
+                    //console.log("dislike="+d.y);
+                    //console
                     if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to dislike")
                         Parse.User.current().set(d.place_id,"dislike");
