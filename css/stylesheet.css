@@ -94,10 +94,11 @@ body {
 
 #likeIMG {
   position: absolute;
-   width:450px;
-  height:450px;
+   width:250px;
+  height:250px;
   left:0;
-  top:200px;
+  top:50%;
+  margin-top:-125px;
   display: inline-block;
     padding-top: 25px;
     padding-right: 50px;
@@ -109,10 +110,11 @@ body {
 
 #dislikeIMG {
   position: absolute;
-   width:450px;
-  height:450px; 
+   width:250px;
+  height:250px; 
   right:0;
-  top:250px;
+  top:50%;
+  margin-top:-125px;
   display: inline-block;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -123,24 +125,51 @@ body {
 }
 @keyframes likeMOVE {
   from {
-  top:250px;
+  top: 50%;
   }
   
   30% {
-  top:200px;
+  top:30%;
   }
   
   to {
-  top:250px;
+  top:50%;
   }
 }
 @keyframes dislikeMOVE {
+  from {
+  top:50%;
+  }
+  
+  30% {
+  top:70%;
+  }
+  
+  to {
+  top:50%;
+  }
+}
+
+@keyframes likeOUT {
+  from {
+  top:50%;
+  }
+  
+  30% {
+  top:150px;
+  }
+  
+  to {
+  top:0px;
+  }
+}
+@keyframes dislikeOUT {
   from {
   top:250px;
   }
   
   30% {
-  top:300px;
+  top:350px;
   }
   
   to {
