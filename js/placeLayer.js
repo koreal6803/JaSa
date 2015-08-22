@@ -151,11 +151,27 @@ function PlaceLayer(places , map) {
             })
             .on("drag", function(d) {
                 absLength=(Math.abs(d.x-startX)+Math.abs(d.y-startY));
+
+                if(d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
+                {
+                    d3.select("#likeIMG").style("animation-play-state","running"); 
+                    d3.select("#dislikeIMG").style("animation-play-state","paused");
+                    d3.select("#likeDIV").style("opacity","1");
+                    d3.select("#dislikeDIV").style("opacity","0.7");
+                }
+                else 
+                {
+                    d3.select("#likeIMG").style("animation-play-state","paused"); 
+                    d3.select("#dislikeIMG").style("animation-play-state","running");
+                    d3.select("#likeDIV").style("opacity","0.7");
+                    d3.select("#dislikeDIV").style("opacity","1");
+                }                
                 if(absLength>300){
                     console.log("drag="+d.x);
                     console.log("drag="+d.y);  
                     d3.select("#likeDIV").style("visibility","visible");  
                     d3.select("#dislikeDIV").style("visibility","visible");
+
                 }
                 else{
                     console.log("startX="+startX);
@@ -178,6 +194,9 @@ function PlaceLayer(places , map) {
                 console.log("status : " + login);
                 if(absLength>300 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width && login === true)
                 {
+                    console.log("like="+d.x);
+                    console.log("like="+d.y);
+
                     parseOperation.setPopular(d.place_id, 1);  
                     for (var i in _places ) {
                         if (d.place_id === _places[i].place_id) {
