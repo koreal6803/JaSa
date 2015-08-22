@@ -17,7 +17,7 @@ function ParseOperation() {
             query.equalTo("place_id",place_id);
             query.find({
               success: function(results) {
-                alert("Successfully retrieved " + results.length + " scores.");
+                console.log("Successfully retrieved " + results.length + " scores.");
                 // Do something with the returned Parse.Object values
                 var object = results[0];
                 if (ari_type === 1)
@@ -41,7 +41,7 @@ function ParseOperation() {
               popularObject.set("popular", 0);
             popularObject.save(null, {
               success: function(object) {
-                alert('New object created with objectId: ' + popularObject.id);
+                console.log('New object created with objectId: ' + popularObject.id);
               },
               error: function(model, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
@@ -64,6 +64,8 @@ function ParseOperation() {
         success: function(results) {
           if(results.length > 0)
           	callback(results[0].get('popular'),place);
+          else
+          	callback(0,place);
         },
         error: function(error) {
         	console.log(place.place_id);

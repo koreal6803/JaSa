@@ -23,6 +23,8 @@ function PlaceLayer(places , map) {
 
     var _onClickNode;
 
+    var _popularUnit = 5;
+
     // modify _places according to old place index and new places
     this.updatePlaces = function (oldPlaceIdx, newPlaces) {
 
@@ -97,10 +99,10 @@ function PlaceLayer(places , map) {
         console.log(zoomLevel);
 
         // conver each data to divs (div is an visual object)
-        this.updateLayout();
+        //this.updateLayout();
 
         // start force direct
-        this.force.start();
+        //this.force.start();
 
         // setting force layout for tick event (animation)
         var drawCnt = 0;
@@ -122,7 +124,19 @@ function PlaceLayer(places , map) {
             }
         });
     };
-
+/*
+    this.updateNodeSize = function (place) {
+        for( var i = _places.length ; i < _nodes.length ; i++) {
+            if(place.place_id == _nodes[i].place_id) {
+                _nodes[i].radius = 10;
+                console.log(d3.select(_nodes[i]));
+                d3.select(_nodes[i])
+                    .each(nodeInitialTransition);
+                break;
+            }
+        }
+    }
+*/
     // redraw the nodes and edges
     this.updateLayout = function () {
         createNodes(_nodes);
@@ -175,21 +189,36 @@ function PlaceLayer(places , map) {
             .on("dragend", function(d) {
                 var absLength=(Math.abs(d.x-startX)^2+Math.abs(d.y-startY)^2)^0.5;
 
-                //var likeDIV= d3.select("#likeDIV");
-                //var dislikeDIV= d3.select("#dislikeDIV");
-                    d3.select("#likeDIV").style("visibility","hidden");  
-                    d3.select("#dislikeDIV").style("visibility","hidden");
-                    var parseOperation = new ParseOperation();
+                d3.select("#likeDIV").style("visibility","hidden");  
+                d3.select("#dislikeDIV").style("visibility","hidden");
+                var parseOperation = new ParseOperation();
                 if(absLength>200 && d.x>d3.select("#dislikeDIV").node().getBoundingClientRect().width)
                 {
                     parseOperation.setPopular(d.place_id, 1);  
+                    for (var i in _places ) {
+                        if (d.place_id === _places[i].place_id) {
+                            _places[i].radius += _popularUnit;
+                            _obj.updateLayout();
+                            _obj.force.start();
+                            break;
+                        }
+                    }
                 }
                 else if(absLength>200)
                 {
                     parseOperation.setPopular(d.place_id, 2);  
+                    for (var i in _places ) {
+                        if (d.place_id === _places[i].place_id) {
+                            _places[i].radius -= _popularUnit;
+                            _obj.updateLayout();
+                            _obj.force.start();
+                            break;
+                        }
+                    }
                 }
-                //console.log(d);
+                map.set('draggable',true);
             });
+
         // add new nodes
 
         _selectionNode.enter()
@@ -197,41 +226,32 @@ function PlaceLayer(places , map) {
             .attr('class', 'node')
             .each(nodeInitialTransition)
             .call(dragEvent)
-            // .on("mouseup.drag",function(d,i) {
-                
-            //     console.log("mouseup.drag="+d.x);
-            //     console.log("mouseup.drag="+d.y);
-
-            // })
-
-
             .on("mouseover",function(d){
                 d3.select(this).transition()
-                .ease('cubic-in')
-                .style('width'      , (d.radius *3) + 'px' )
-               .style('height'     ,  (d.radius *3) + 'px' )
-               .style('margin-left', ' -' + d.radius*1.5 + 'px' )
-               .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
+                   .ease('cubic-in')
+                   .style('width'      , (d.radius *3) + 'px' )
+                   .style('height'     ,  (d.radius *3) + 'px' )
+                   .style('margin-left', ' -' + d.radius*1.5 + 'px' )
+                   .style('margin-top' , ' -' + d.radius*1.5 + 'px' )
             })
             .on("mouseout",function(d){
                 d3.select(this).transition()
-               .ease('cubic-out')
-               .style('width'      , (d.radius*2) + 'px' )
-               .style('height'     , (d.radius*2) + 'px' )
-               .style('margin-left', ' -' + d.radius + 'px' )
-               .style('margin-top' , ' -' + d.radius + 'px' )
+                   .ease('cubic-out')
+                   .style('width'      , (d.radius*2) + 'px' )
+                   .style('height'     , (d.radius*2) + 'px' )
+                   .style('margin-left', ' -' + d.radius + 'px' )
+                   .style('margin-top' , ' -' + d.radius + 'px' )
             })
             .on("click", function (d) {
                 if (d3.event.defaultPrevented) return;
-                _onClickNode(d);
+                
+                    _onClickNode(d);
             })
-
             .on("drag", function(d,i) {
                 var t = d3.select(this);
                 //turn {x: t.attr("x"), y: t.attr("y")};
                 console.log(t.attr("x"));
                 console.log(d.attr("y"));
-                
             });
 
 
@@ -259,15 +279,24 @@ function PlaceLayer(places , map) {
             datas[i].x = p.x;
             datas[i].y = p.y;
         }
+        var cnt = datas.length;
         for(var i in datas) {
             parseOperation.getPopular(datas[i] , function(popular , data) {
-                data.radius = popular * 50 + 10;
-                //_obj.updateLayout();
-                //_obj.force.start();
+                data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
+                if(data.radius < 10)
+                    data.radius = 10;
                 console.log(data);
                 console.log("get name: " + data.info.name + "get popular: " + data.radius);
-            });
 
+                cnt--;
+                console.log("cnt "+cnt);
+
+                if(cnt === 0) {
+                    _obj.force.stop();
+                    _obj.updateLayout();
+                    _obj.force.start();
+                }
+            });
         }
     };
 

@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/github-light.css" media="screen">
 
 
     <script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
@@ -23,10 +22,6 @@
     <script async type="text/javascript" src="./js/searchBox.js"></script>
     <script async type="text/javascript" src="./js/parse.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script type="text/javascript" src="js/jquery.arctext.js"></script>
 
   </head>
   <body>
@@ -136,9 +131,10 @@
           placeLayer.updatePlaces(oldPlaceIdx, newPlaces);
 
           // update layout
+          /*
           placeLayer.force.stop();
           placeLayer.updateLayout();
-          placeLayer.force.start();
+          placeLayer.force.start();*/
           placeLayer.onClickNode(function(d){
             var placeDetial = placeRefresh.onAddPlaceDetial(d.place_id);
           });
