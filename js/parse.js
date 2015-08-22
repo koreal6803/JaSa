@@ -7,7 +7,8 @@ function ParseOperation() {
       query.equalTo("place_id",place_id);
       query.find({
         success: function(results) {
-          console.log("get place success!" + results);
+          console.log("get place success!");
+          console.log(results);
           if (results.length > 0) {
             var object = results[0];
                 if (ari_type === 1) {
@@ -87,6 +88,7 @@ function ParseOperation() {
 
   function addLikedPlace (place) {
     var likeSet = user_object.relation("likes");
+
     var addedPlace = likeSet.add(place);
     console.log(addedPlace);
 
