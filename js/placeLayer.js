@@ -196,9 +196,9 @@ function PlaceLayer(places , map) {
                 {
                     //console.log("like="+d.x);
                     //console.log("like="+d.y);
-                    if (Parse.User.current().get("test") === undefined) {
+                    if (Parse.User.current().get(d.place_id) === undefined) {
                         console.log("decide to like");
-                        Parse.User.current().set("test","like");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         for (var i in _places ) {
@@ -209,9 +209,9 @@ function PlaceLayer(places , map) {
                                 break;
                             }
                         }
-                    } else if (Parse.User.current().get("test") === "dislike") {
+                    } else if (Parse.User.current().get(d.place_id) === "dislike") {
                         console.log("decide to like from dislike");
-                        Parse.User.current().set("test","like");
+                        Parse.User.current().set(d.place_id,"like");
                         Parse.User.current().save();
                         parseOperation.setPopular(d.place_id, 1);  
                         parseOperation.setPopular(d.place_id, 1);
