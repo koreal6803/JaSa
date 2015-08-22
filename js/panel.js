@@ -7,41 +7,36 @@ function CenterControl(controlDiv, map, d) {
   controlUI.style.borderRadius = '3px';
   controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
   controlUI.style.cursor = 'cursor';
-  controlUI.style.marginBottom = '22px';
-  controlUI.style.textAlign = 'left';
-  controlUI.title = 'Resturant Information';
+  //controlUI.style.marginBottom = '22px';
+  controlUI.style.textAlign = 'center';
+  controlUI.style.padding = '10px';
+  controlUI.style.width = '300px';
+  controlUI.style.height = '400px';
+  controlUI.style.overflowY = 'scroll';
   controlDiv.appendChild(controlUI);
 
   // Set CSS for the control interior.
   var controlText = document.createElement('div');
   controlText.style.color = 'rgb(25,25,25)';
+  controlText.className = "panel";
   controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-  controlText.style.fontSize = '16px';
-  controlText.style.lineHeight = '38px';
-  controlText.style.paddingLeft = '5px';
-  controlText.style.paddingRight = '5px';
-  controlText.innerHTML = "Name : " + d.name + "<br>" + 
-                          "Phone : " + d.formatted_phone_number + "<br>" +
-                          "Address : " + d.formatted_address + "<br>" +
-                          "Opening hours : ";
-  if(d.opening_hours === undefined)
-            controlText.innerHTML += "No Information";
-  else {
+  controlText.innerHTML = '<h3 style="color:blue;line-height:1.5em;font-size:2.5em;margin:0.2em;padding:0">' + d.name + "<h3>" + 
+                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_phone_number + "</h5>" +
+                          '<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + d.formatted_address + "</h5>";
+
+  if(d.opening_hours !== undefined) {
      var day = new Date();
      var text = d.opening_hours.weekday_text[day.getDay() - 1];
-     var text1 = "";
-
-     for(var i = 0 ; i < text.length ; i++) {
-      if (i > 4)
-        text1 += text[i];
-     }
-     controlText.innerHTML += text1;
+     text = text.substring(4,text.length);
+     controlText.innerHTML += ('<h5 style="color:#333333;margin:0;padding:0;font-size:1.2em">' + text + "</h5>");
   }
   
-  if(d.photos !== undefined)
-    controlText.innerHTML += "<br><img src="+d.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200})+">";
-    controlText.innerHTML += '<br><input type="Button" value="Close" onClick="map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();">';
-  //var maxWidth = 100;
+  if(d.photos !== undefined) {
+     for(var i in d.photos) {
+        controlText.innerHTML += '</br><img style="-webkit-border-radius:5px" src='+d.photos[i].getUrl({'maxWidth': 270, 'maxHeight': 1000})+">";
+     }
+  }
+    controlText.innerHTML += '<input type="Button" value="X" onClick="map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();">';
   controlUI.appendChild(controlText);
 
 
