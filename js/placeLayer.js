@@ -69,7 +69,7 @@ function PlaceLayer(places , map) {
 
         // setting force layout for tick event (animation)
         var drawCnt = 0;
-        var framerate = (mobileAndTabletcheck())?10:3;
+        var framerate = (mobileAndTabletcheck())?5:3;
         this.force.on('tick', function(e) {
 
             // prevent overlaped nodes
