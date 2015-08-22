@@ -68,13 +68,13 @@ html, body, #map-canvas {
     vertical-align: middle;
     font-size: 1.5em;
     word-break: break-all;
-    color: white;
+    color: #333333;
 }
 
 
 .edge {
   height:1px;
-  background-color:rgba(0,0,0,0.5);
+  background-color:#333333;
   position:absolute;
   transform-origin:0% 0%;
   -moz-transform-origin:0% 0%;
