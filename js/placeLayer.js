@@ -200,6 +200,7 @@ function PlaceLayer(places , map) {
                     relation.query().find({
                         success: function(list) {
                             // list contains the places that the current user likes.
+                            console.log("list : " + list);
                             var PopularObject = Parse.Object.extend("place");
                             var query = new Parse.Query(PopularObject);
                             query.equalTo("place_id",d.place_id);
