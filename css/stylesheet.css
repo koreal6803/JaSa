@@ -71,12 +71,10 @@ body {
  visibility: hidden;
 
   float:left;
-
  background:#4FBE94;
-
-
-
  z-index:1000000000;
+
+
 }
 
 #dislikeDIV {
@@ -84,7 +82,7 @@ body {
  left:0;  
  width:50%;
  height:100%; 
-opacity:0.7;
+  opacity:0.7;
  visibility: hidden;
 
  float:left;
@@ -104,6 +102,9 @@ opacity:0.7;
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
+    animation: 1s likeMOVE infinite ;
+    animation-timing-function:ease-in-out;
+    animation-delay: 1s ;
 }
 
 #dislikeIMG {
@@ -116,4 +117,44 @@ opacity:0.7;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-left: 50px;
+    animation: 1s dislikeMOVE infinite ;
+    animation-timing-function:ease-in-out;
+}
+@keyframes likeMOVE {
+  from {
+   width:450px;
+  height:450px; 
+  top:250px;
+  }
+  
+  30% {
+   width:465px;
+  height:465px;
+  top:200px;
+  }
+  
+  to {
+   width:450px;
+  height:450px;
+  top:250px;
+  }
+}
+@keyframes dislikeMOVE {
+  from {
+   width:450px;
+  height:450px; 
+  top:250px;
+  }
+  
+  30% {
+   width:465px;
+  height:465px;
+  top:300px;
+  }
+  
+  to {
+   width:450px;
+  height:450px; 
+  top:250px;
+  }
 }

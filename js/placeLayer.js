@@ -265,6 +265,7 @@ function PlaceLayer(places , map) {
             // fixed circles
             datas[i].fixed = true;
             datas[i].radius = 10;
+            datas[i].color = color();
 
             if(datas[i].radius < 10)
                 datas[i].radius = 10;
@@ -400,7 +401,6 @@ function PlaceLayer(places , map) {
         for (var i in _places) {
             ret.push(clone(_places[i]));
             ret[ret.length - 1].fixed = false;
-            ret[ret.length - 1].color = color();
         }
     }
 
