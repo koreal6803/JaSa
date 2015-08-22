@@ -7,21 +7,30 @@ function ParseOperation() {
       query.equalTo("place_id",place_id);
       query.find({
         success: function(results) {
+          console.log("get place success!" + results);
           if (results.length > 0) {
             var object = results[0];
                 if (ari_type === 1) {
                   object.increment("popular");
                   addLikedPlace(object);
+                  console.log("like");
                 }
                 else {
+                  console.log("dislike");
                   object.set("popular", object.get("popular") - 1);
                   removeLikedPlace(object);
                 }
-                object.save();
+                object.save(null, {
+                  success: function(result) {
+                    console.log("save popular!" + result);
+                  },
+                  error: function(gameScore, error) {
+                    alert('Failed to create new object, with error code: ' + error.message);
+                  }
+                });
                 
           }
           else {
-            var PopularObject = Parse.Object.extend("place");
             var popularObject = new PopularObject();
             popularObject.set("place_id", place_id);
             if (ari_type == 1) {
@@ -29,7 +38,7 @@ function ParseOperation() {
               addLikedPlace(object);
             }
             else {
-              popularObject.set("popular", 0);
+              popularObject.set("popular", -1);
               removeLikedPlace(object);
             }
             popularObject.save(null, {
@@ -81,7 +90,14 @@ function ParseOperation() {
     likeSet.add(place);
     var dislikeSet = user_object.relation("dislikes");
     dislikeSet.remove(place);
-    user_object.save();
+    user_object.save(null, {
+                  success: function(result) {
+                    console.log("save like place!" + result);
+                  },
+                  error: function(gameScore, error) {
+                    alert('Failed to create new object, with error code: ' + error.message);
+                  }
+                });
   }
 
   function removeLikedPlace (place) {
@@ -89,6 +105,13 @@ function ParseOperation() {
     dislikeSet.add(place);
     var likeSet = user_object.relation("likes");
     likeSet.remove(place);
-    user_object.save();
+    user_object.save(null, {
+                  success: function(result) {
+                    console.log("save dislike place!" + result);
+                  },
+                  error: function(gameScore, error) {
+                    alert('Failed to create new object, with error code: ' + error.message);
+                  }
+                });
   }
 }
