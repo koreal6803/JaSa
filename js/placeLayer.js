@@ -236,7 +236,7 @@ function PlaceLayer(places , map) {
                     if (user_object.get(d.place_id) === undefined) {
                         console.log("decide to dislike")
                         user_object.set(d.place_id,"dislike");
-                        user_object..save();
+                        user_object.save();
                         parseOperation.setPopular(d.place_id, 2);  
                         for (var i in _places ) {
                             if (d.place_id === _places[i].place_id) {
