@@ -11,6 +11,7 @@ function ParseOperation() {
           console.log(results);
           if (results.length > 0) {
             var object = results[0];
+            console.log(object);
                 if (ari_type === 1) {
                   object.increment("popular");
                   addLikedPlace(object);
