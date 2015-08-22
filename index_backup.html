@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
 
 
     <script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
@@ -20,7 +20,6 @@
     <script async type="text/javascript" src="./js/placeLayer.js"></script>
     <script async type="text/javascript" src="./js/searchBox.js"></script>
     <script async type="text/javascript" src="./js/parse.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
 
   </head>
   <body>
@@ -34,7 +33,7 @@
         </div>
       </section>
 
-      <div id="guideDIV" >
+      <div id="guideDIV">
        
         <div class="googleDIV">
           <section class="main-content"><!--section-->
@@ -43,69 +42,28 @@
             <div id="map-canvas"></div>
           </section>
         </div>
-        <div id="likeDIV">F
-          <img id="likeIMG" src="./img/custom_like_button.png">
-          Like This</img>
-        </div>
         <div id="dislikeDIV">
-          <img id="dislikeIMG" src="./img/custom_dislike_button.png">Disike This</img>
-        </div>       
+          <img id="dislikeIMG" src="./img/custom_dislike_button.png"></img>
+        </div> 
+        <div id="likeDIV">
+          <img id="likeIMG" src="./img/custom_like_button.png"></img>
+        </div>
+        
+ 
+      </div>     
       <!--here is the like dislike guide-->
  
 
-    </div>
+    
+
+
+
 
   </body>
   <script>
     var map;
-    var user_object = null;
     Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
-   
-///
-    window.fbAsyncInit = function() {
-        Parse.FacebookUtils.init({ // this line replaces FB.init({
-            appId      : '1642885569256712', // Facebook App ID
-            status     : true,  // check Facebook Login status
-            cookie     : true, 
-            xfbml      : true,  // initialize Facebook social plugins on the page
-            version    : 'v2.2' // point to the latest Facebook Graph API version
-        });
 
-    // Run code after the Facebook SDK is loaded.
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    function fbLogin(){
-       FB.getLoginStatus(function(response) {
-           //if (response.status === 'connected') {login = true;}
-           //else {
-             Parse.FacebookUtils.logIn(null, {
-                 success: function(user) {
-                     user_object = user;
-                     console.log(user);
-                     FB.api('/me', function(response) {
-                         console.log('Successful login for: ' + response.name);
-                         document.getElementById('login_button').innerHTML =
-                         'Thanks for logging in, ' + response.name + '!';
-                     });
-
-                 },
-                 error: function(user, error) {
-                   alert("User cancelled the Facebook login or did not fully authorize.");
-                 }
-             });
-           //}
-       });
-       
-    }
-///
     function initialize() {
 
       // initial map
@@ -208,13 +166,6 @@
 
     // start
     google.maps.event.addDomListener(window, 'load', initialize);
-
   </script>
-
-  <a id="logic_button" scope="public_profile,email" onclick="fbLogin();" style="background:transparent;border-width:0;position:absolute; right:10px;top:10px;">
-      <img src="./img/sign-in-facebook.png" style="height:50px">
-  </a>
-    </div>
-
 
 </html>
