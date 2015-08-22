@@ -196,6 +196,8 @@ function PlaceLayer(places , map) {
                     ///
                     var liked;
                     var disliked;
+                    parseOperation.setPopular(d.place_id, 1);
+                    /*
                     var relation = user_object.relation("likes");
                     relation.query().find({
                         success: function(list) {
@@ -275,6 +277,7 @@ function PlaceLayer(places , map) {
                             }
                         }
                     }
+                    */
                 }
                 else if(absLength>150 && login === true)
                 {

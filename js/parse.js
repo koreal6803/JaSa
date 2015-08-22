@@ -87,17 +87,13 @@ function ParseOperation() {
 
   function addLikedPlace (place) {
     var likeSet = user_object.relation("likes");
-    likeSet.add(place);
+    var addedPlace = likeSet.add(place);
+    console.log(addedPlace);
+
     var dislikeSet = user_object.relation("dislikes");
-    dislikeSet.remove(place);
-    user_object.save(null, {
-                  success: function(result) {
-                    console.log("save like place!" + result);
-                  },
-                  error: function(gameScore, error) {
-                    alert('Failed to create new object, with error code: ' + error.message);
-                  }
-                });
+    var removedPlace = dislikeSet.remove(place);
+    console.log(removedPlace);
+    user_object.save();
   }
 
   function removeLikedPlace (place) {
@@ -105,13 +101,7 @@ function ParseOperation() {
     dislikeSet.add(place);
     var likeSet = user_object.relation("likes");
     likeSet.remove(place);
-    user_object.save(null, {
-                  success: function(result) {
-                    console.log("save dislike place!" + result);
-                  },
-                  error: function(gameScore, error) {
-                    alert('Failed to create new object, with error code: ' + error.message);
-                  }
-                });
+
+    user_object.save();
   }
 }
