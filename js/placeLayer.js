@@ -283,9 +283,11 @@ function PlaceLayer(places , map) {
                 if(mobileAndTabletcheck()) {
                     data.radius /= 2;
                 }
-                    
-                if(datas[i].radius < 10 || datas[i].radius === undefined || isNaN(datas[i].radius))
-                    datas[i].radius = 10;
+                
+                if(data.radius < 10 || data.radius === undefined || isNaN(data.radius))
+                    data.radius = 10;
+                if(data.radius > 400)
+                    data.radius = 400;
                 console.log(data);
                 console.log("get name: " + data.info.name + "get popular: " + data.radius);
 
