@@ -77,8 +77,7 @@
                 // the user's ID, a valid access token, a signed
                 // request, and the time the access token 
                 // and signed request each expire
-                document.getElementById('login_button').innerHTML =
-                'Thanks for logging in, ' + response.name + '!';
+                document.getElementById('login_button').innerHTML = 'Thanks for logging in, ' + response.name + '!';
                 console.log("log in!!!!");
 
                 var uid = response.authResponse.userID;
@@ -230,7 +229,7 @@
 
   </script>
 
-  <a id="logic_button" scope="public_profile,email" onclick="fbLogin();" style="background:transparent;border-width:0;position:absolute; right:10px;top:10px;">
+  <a id="login_button" scope="public_profile,email" onclick="fbLogin();" style="background:transparent;border-width:0;position:absolute; right:10px;top:10px;">
       <img src="./img/sign-in-facebook.png" style="height:50px">
   </a>
     </div>
