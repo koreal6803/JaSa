@@ -279,7 +279,6 @@ function PlaceLayer(places , map) {
                     data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
                 else
                     data.radius = popular * _popularUnit + 10;
-                console.log("radius " + radius);
 
                 if(mobileAndTabletcheck()) {
                     data.radius /= 2;
