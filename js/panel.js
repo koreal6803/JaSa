@@ -10,8 +10,8 @@ function CenterControl(controlDiv, map, d) {
   //controlUI.style.marginBottom = '22px';
   controlUI.style.textAlign = 'center';
   controlUI.style.padding = '10px';
-  controlUI.style.width = '300px';
-  controlUI.style.height = '400px';
+  controlUI.style.width = '500px';
+  controlUI.style.height = '500px';
   controlUI.style.overflowY = 'scroll';
   controlDiv.appendChild(controlUI);
 
@@ -36,7 +36,7 @@ function CenterControl(controlDiv, map, d) {
   
   if(d.photos !== undefined) {
      for(var i in d.photos) {
-        controlText.innerHTML += '</br><img style="-webkit-border-radius:5px" src='+d.photos[i].getUrl({'maxWidth': 270, 'maxHeight': 1000})+">";
+        controlText.innerHTML += '</br><img style="-webkit-border-radius:5px" src='+d.photos[i].getUrl({'maxWidth': 470, 'maxHeight': 2000})+">";
      }
   }
     controlText.innerHTML += '<input type="Button" value="X" onClick="map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();">';
