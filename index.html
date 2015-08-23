@@ -69,7 +69,24 @@
             version    : 'v2.2' // point to the latest Facebook Graph API version
         });
 
-    // Run code after the Facebook SDK is loaded.
+        // Run code after the Facebook SDK is loaded.
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                // the user is logged in and has authenticated your
+                // app, and response.authResponse supplies
+                // the user's ID, a valid access token, a signed
+                // request, and the time the access token 
+                // and signed request each expire
+                document.getElementById('login_button').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+                console.log("log in!!!!");
+
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+            }else {
+                console.log("log out!!!!");
+            }
+        });
     };
 
     (function(d, s, id){
@@ -80,23 +97,6 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            // the user is logged in and has authenticated your
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
-            // and signed request each expire
-            document.getElementById('login_button').innerHTML =
-            'Thanks for logging in, ' + response.name + '!';
-            console.log("log in!!!!");
-
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-        }else {
-            console.log("log out!!!!");
-        }
-    });
     function fbLogin(){
        FB.getLoginStatus(function(response) {
            //if (response.status === 'connected') {login = true;}
