@@ -265,8 +265,6 @@ function PlaceLayer(places , map) {
             datas[i].radius = 10;
             datas[i].color = color();
 
-            if(datas[i].radius < 10 || datas[i].radius === undefined)
-                datas[i].radius = 10;
             var p = new google.maps.LatLng(datas[i].lng, datas[i].lat);
             p = _projection.fromLatLngToDivPixel(p);
             datas[i].x = p.x;
@@ -287,8 +285,8 @@ function PlaceLayer(places , map) {
                     data.radius /= 2;
                 }
                     
-                if(data.radius < 10)
-                    data.radius = 10;
+                if(datas[i].radius < 10 || datas[i].radius === undefined)
+                    datas[i].radius = 10;
                 console.log(data);
                 console.log("get name: " + data.info.name + "get popular: " + data.radius);
 
