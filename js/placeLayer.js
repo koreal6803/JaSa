@@ -284,7 +284,7 @@ function PlaceLayer(places , map) {
                     data.radius /= 2;
                 }
                     
-                if(datas[i].radius < 10 || datas[i].radius === undefined)
+                if(datas[i].radius < 10 || datas[i].radius === undefined || isNaN(datas[i].radius))
                     datas[i].radius = 10;
                 console.log(data);
                 console.log("get name: " + data.info.name + "get popular: " + data.radius);
