@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
-    <script src="//s3-ap-northeast-1.amazonaws.com/justfont-user-script/jf-35105.js"></script>
     <script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
@@ -81,6 +80,20 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            // the user is logged in and has authenticated your
+            // app, and response.authResponse supplies
+            // the user's ID, a valid access token, a signed
+            // request, and the time the access token 
+            // and signed request each expire
+            document.getElementById('login_button').innerHTML =
+            'Thanks for logging in, ' + response.name + '!';
+
+            var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+        }
+    });
     function fbLogin(){
        FB.getLoginStatus(function(response) {
            //if (response.status === 'connected') {login = true;}
@@ -91,8 +104,6 @@
                      console.log(user);
                      FB.api('/me', function(response) {
                          console.log('Successful login for: ' + response.name);
-                         document.getElementById('login_button').innerHTML =
-                         'Thanks for logging in, ' + response.name + '!';
                      });
 
                  },
@@ -203,10 +214,16 @@
         searchBox.setBounds(map.getBounds());
         placeRefresh.nearbySearch();
       });
-    }
+      
+  }
+    
+  function checkUserLogin() {
+      if(user_object !== null) {
+      }
+  }
 
-    // start
-    google.maps.event.addDomListener(window, 'load', initialize);
+  // start
+  google.maps.event.addDomListener(window, 'load', initialize);
 
   </script>
 
