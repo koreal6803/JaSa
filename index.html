@@ -89,9 +89,12 @@
             // and signed request each expire
             document.getElementById('login_button').innerHTML =
             'Thanks for logging in, ' + response.name + '!';
+            console.log("log in!!!!");
 
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
+        }else {
+            console.log("log out!!!!");
         }
     });
     function fbLogin(){
