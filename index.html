@@ -83,6 +83,7 @@
                 console.log("log in!!!!");
                 var uid = response.authResponse.userID;
                 var accessToken = response.authResponse.accessToken;
+                fbLogin();
             }else {
                 document.getElementById('login_button').innerHTML =  '<img src="./img/sign-in-facebook.png" style="height:50px">';
                 console.log("log out!!!!");
