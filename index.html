@@ -77,12 +77,14 @@
                 // the user's ID, a valid access token, a signed
                 // request, and the time the access token 
                 // and signed request each expire
-                document.getElementById('login_button').innerHTML = 'Thanks for logging in, ' + response.authResponse.userID + '!';
-                console.log("log in!!!!");
 
+                document.getElementById('login_button').innerHTML =  'You are login!';
+                console.log("log in!!!!");
                 var uid = response.authResponse.userID;
                 var accessToken = response.authResponse.accessToken;
+                fbLogin();
             }else {
+                document.getElementById('login_button').innerHTML =  '<img src="./img/sign-in-facebook.png" style="height:50px">';
                 console.log("log out!!!!");
             }
         });
@@ -97,25 +99,19 @@
     }(document, 'script', 'facebook-jssdk'));
 
     function fbLogin(){
-       FB.getLoginStatus(function(response) {
-           //if (response.status === 'connected') {login = true;}
-           //else {
-             Parse.FacebookUtils.logIn(null, {
-                 success: function(user) {
-                     user_object = user;
-                     console.log(user);
-                     FB.api('/me', function(response) {
-                         console.log('Successful login for: ' + response.name);
-                     });
+         Parse.FacebookUtils.logIn(null, {
+             success: function(user) {
+                 user_object = user;
+                 console.log(user);
+                 FB.api('/me', function(response) {
+                     console.log('Successful login for: ' + response.name);
+                 });
 
-                 },
-                 error: function(user, error) {
-                   alert("User cancelled the Facebook login or did not fully authorize.");
-                 }
-             });
-           //}
-       });
-       
+             },
+             error: function(user, error) {
+               alert("User cancelled the Facebook login or did not fully authorize.");
+             }
+         });
     }
 ///
     function initialize() {
@@ -229,7 +225,7 @@
 
   </script>
 
-  <a id="login_button" scope="public_profile,email" onclick="fbLogin();" style="background:transparent;border-width:0;position:absolute; right:10px;top:10px;">
+  <a id="login_button" scope="public_profile,email" onclick="fbLogin();" style="color:white;background:transparent;border-width:0;position:absolute; right:10px;top:10px;">
       <img src="./img/sign-in-facebook.png" style="height:50px">
   </a>
     </div>
