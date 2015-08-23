@@ -77,7 +77,7 @@
                 // the user's ID, a valid access token, a signed
                 // request, and the time the access token 
                 // and signed request each expire
-                document.getElementById('login_button').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+                document.getElementById('login_button').innerHTML = 'Thanks for logging in, ' + response.authResponse.userID + '!';
                 console.log("log in!!!!");
 
                 var uid = response.authResponse.userID;
