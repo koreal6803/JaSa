@@ -68,7 +68,7 @@ function ParseOperation() {
           	callback(0,place);
         },
         error: function(error) {
-          console.log("Error: " + error.code + " " + error.message + ' ' + place_id);
+          console.log("Error: " + error.code + " " + error.message);
         }
       });
   }
