@@ -265,7 +265,7 @@ function PlaceLayer(places , map) {
             datas[i].radius = 10;
             datas[i].color = color();
 
-            if(datas[i].radius < 10)
+            if(datas[i].radius < 10 || datas[i].radius === undefined)
                 datas[i].radius = 10;
             var p = new google.maps.LatLng(datas[i].lng, datas[i].lat);
             p = _projection.fromLatLngToDivPixel(p);
@@ -275,10 +275,13 @@ function PlaceLayer(places , map) {
         var cnt = datas.length;
         for(var i in datas) {
             parseOperation.getPopular(datas[i] , function(popular , data) {
+                console.log("popular " + popular);
+                console.log("rating " + data.info.rating);
                 if(data.info.rating)
                     data.radius = (data.info.rating-3)*50 + popular * _popularUnit + 10;
                 else
                     data.radius = popular * _popularUnit + 10;
+                console.log("radius " + radius);
 
                 if(mobileAndTabletcheck()) {
                     data.radius /= 2;
@@ -316,13 +319,6 @@ function PlaceLayer(places , map) {
 
 
         // open information
-        var open;
-        if(d.info.opening_hours === undefined)
-            open = '開店時間未知';
-        else if(d.info.opening_hours.open_now)
-            open = '營業中';
-        else
-            open = '休息中';
         div.html("");
         if(d.fixed === false){
             div.append("div")
