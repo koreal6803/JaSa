@@ -64,7 +64,7 @@
     window.fbAsyncInit = function() {
         Parse.FacebookUtils.init({ // this line replaces FB.init({
             appId      : '1642885569256712', // Facebook App ID
-            status     : false,  // check Facebook Login status
+            //status     : false,  // check Facebook Login status
             cookie     : true, 
             xfbml      : true,  // initialize Facebook social plugins on the page
             version    : 'v2.2' // point to the latest Facebook Graph API version
@@ -83,7 +83,7 @@
                 console.log("log in!!!!");
                 var uid = response.authResponse.userID;
                 var accessToken = response.authResponse.accessToken;
-                fbLogin();
+                user_object = Parse.User.current();
             }else {
                 document.getElementById('login_button').innerHTML =  '<img src="./img/sign-in-facebook.png" style="height:50px">';
                 console.log("log out!!!!");
