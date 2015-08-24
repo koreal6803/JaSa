@@ -76,6 +76,7 @@ function ParseOperation() {
   function createPlaceObj (place_id, popular, callback) {
     var place = new Place();
     place.set("place_id", place_id);
+    place.set("popular", popular);
     place.save(null, {
       success: function(object) {
         if(callback !== undefined)
