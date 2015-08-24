@@ -108,6 +108,9 @@
              success: function(user) {
                  user_object = user;
                  console.log(user);
+                 FB.api('/me', function(response) {
+                    document.getElementById('login_button').innerHTML =  'Hi! '+ response.name + '~';
+                    console.log('Successful login for: ' + response.name);
 
              },
              error: function(user, error) {
