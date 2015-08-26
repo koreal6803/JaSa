@@ -78,6 +78,7 @@ function PlaceRefresh(googleMap , googlePlace){
         $.ajax({
                 url: requestData.url,
                 type: requestData.method,
+                dataType: 'JSONP',
                 data: oauth.authorize(requestData, token)
         }).done(function(data) {
                 //process your data here

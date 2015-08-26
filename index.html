@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>食啥 | 一眼發掘在地美食！</title>
+    <meta name="description" content="想吃什麼呢？找餐廳怎麼這麼困難！？看完食記還是不知道要吃哪家餐廳？「食啥」能讓您一眼瞭解明天約會的行程、出去郊遊的休息地、或是家族聚會好所在。「食啥」提供美食地圖視覺化系統，配合高準確度的評論與google map結合，帶您快速瞭解在地美食，不讓您的肚子留下遺憾！">
+    <meta name="keywords" content="食啥,吃什麼,餐廳,視覺,地圖,美食,食記,restaurant,visualization">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+    <script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+
+    <script async type="text/javascript" src="./js/placeRefresh.js"></script>
+    <script async type="text/javascript" src="./js/panel.js"></script>
+    <script async type="text/javascript" src="./js/placeLayer.js"></script>
+    <script async type="text/javascript" src="./js/searchBox.js"></script>
+    <script async type="text/javascript" src="./js/parse.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+  </head>
+  <body>
+
+      <section class="page-header"><!--section-->
+        <div style="float:left;width:30%;">
+          <h1 class="project-name">食啥 | JASA</h1>
+        </div>
+        <div style="float:left; width:60%">
+          <h2 class="project-tagline">帶您快速瞭解在地美食，不讓您的肚子留下遺憾！</h2>
+        </div>
+      </section>
+
+      <div id="guideDIV" >
+       
+        <div class="googleDIV">
+          <section class="main-content"><!--section-->
+            <input id="place-input" class="controls" type="text" placeholder="去哪食？">
+            <input id="food-input"  class="controls" type="text" placeholder="食什麼？">
+            <div id="map-canvas"></div>
+          </section>
+        </div>
+        <div id="likeDIV">
+          <img id="likeIMG" src="./img/custom_like_button.png"/>
+        </div>
+        <div id="dislikeDIV">
+          <img id="dislikeIMG" src="./img/custom_dislike_button.png"/>
+        </div>       
+      <!--here is the like dislike guide-->
+ 
+
+      </div>
+
+      <a id="login_button" scope="public_profile,email" onclick="fbLogin();" style="color:white;background:transparent;border-width:0;position:absolute; right:10px;top:10px;"></a>
+  </body>
+  <!--
+  <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-66675868-1', 'auto');
+              ga('send', 'pageview');
+
+  </script>
+  -->
+  <script>
+    var map;
+    var user_object = null;
+    Parse.initialize("49EAagj4X2cGg2FPlkwLfYPoQopCIFOaG4t021TB", "Vf9zWuWKcILLvCeE029O1c5QmCiTsZSMIrCjgVEi");
+   
+///
+    window.fbAsyncInit = function() {
+        Parse.FacebookUtils.init({ // this line replaces FB.init({
+            appId      : '1642885569256712', // Facebook App ID
+            //status     : false,  // check Facebook Login status
+            cookie     : true, 
+            xfbml      : true,  // initialize Facebook social plugins on the page
+            version    : 'v2.2' // point to the latest Facebook Graph API version
+        });
+
+        // Run code after the Facebook SDK is loaded.
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                // the user is logged in and has authenticated your
+                // app, and response.authResponse supplies
+                // the user's ID, a valid access token, a signed
+                // request, and the time the access token 
+                // and signed request each expire
+
+                document.getElementById('login_button').innerHTML =  'You are login!';
+                console.log("log in!!!!");
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+                user_object = Parse.User.current();
+                FB.api('/me', function(response) {
+                    document.getElementById('login_button').innerHTML =  'Hi! '+ response.name + '~';
+                    console.log('Successful login for: ' + response.name);
+                });
+            }else {
+                document.getElementById('login_button').innerHTML =  '<img src="./img/sign-in-facebook.png" style="height:50px">';
+                console.log("log out!!!!");
+            }
+        });
+    };
+
+    //(function(d, s, id){
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) {return;}
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/en_US/sdk.js";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //}(document, 'script', 'facebook-jssdk'));
+
+    function fbLogin(){
+         Parse.FacebookUtils.logIn(null, {
+             success: function(user) {
+                 user_object = user;
+                 console.log(user);
+                 FB.api('/me', function(response) {
+                    document.getElementById('login_button').innerHTML =  'Hi! '+ response.name + '~';
+                    console.log('Successful login for: ' + response.name);
+                 });
+
+             },
+             error: function(user, error) {
+               alert("User cancelled the Facebook login or did not fully authorize.");
+             }
+         });
+    }
+///
+    function initialize() {
+
+      // initial map
+      map = new google.maps.Map(d3.select("#map-canvas").node(), {
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      // setting user location
+      if (navigator.geolocation) {
+      //if (false) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(pos);
+        });
+      }
+      else {
+        var initialLocation = new google.maps.LatLng(25.021459, 121.538105);
+        map.setCenter(initialLocation);
+      }
+
+      // place refresh setup
+      var placeService = new google.maps.places.PlacesService(map);
+      var placeRefresh = new PlaceRefresh(map, placeService);
+      placeRefresh.setKeyword('餐廳');
+
+      // Create the place search box and link it to the UI element.
+      var placeInput = document.getElementById('place-input');
+      var searchBox = new google.maps.places.SearchBox(placeInput);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(placeInput);
+      searchBoxInit(searchBox);
+
+      // Create the food search box and link it to the UI element.
+      var foodInput = document.getElementById('food-input');
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(foodInput);
+      placeRefresh.setKeywordSearchBox(foodInput);
+      foodInput.addEventListener("keydown", function (event) {
+          if(event.keyCode == 13)
+              placeRefresh.nearbySearch();
+      });
+      
+
+      // place layer setup
+      PlaceLayer.prototype = new google.maps.OverlayView();
+      var placeLayer = null;
+    
+      //placeRefresh.onCenterControl(CenterControl);
+
+      // layout the node and edge when every time place update
+      placeRefresh.onUpdatePlaces(function(oldPlaceIdx , newPlaces){
+
+        // use placeLayer to draw nodes and edges
+        if(placeLayer === null){
+          placeLayer = new PlaceLayer(newPlaces, map);
+          placeLayer.setMap(map);
+          placeLayer.onClickNode(function(d){
+            var placeDetial = placeRefresh.onAddPlaceDetial(d.place_id);
+          });
+        }
+        else {
+          // update places
+          placeLayer.updatePlaces(oldPlaceIdx, newPlaces);
+
+          // update layout
+          /*
+          placeLayer.force.stop();
+          placeLayer.updateLayout();
+          placeLayer.force.start();*/
+          placeLayer.onClickNode(function(d){
+            var placeDetial = placeRefresh.onAddPlaceDetial(d.place_id);
+          });
+        }
+      });
+      
+      placeRefresh.onCenterControl(CenterControl);
+
+      // event listener when initial view
+      google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
+        searchBox.setBounds(map.getBounds());
+        placeRefresh.nearbySearch();
+      });
+
+      // event listener when drag view
+      google.maps.event.addListener(map, "dragstart", function(event){
+          google.maps.event.addListenerOnce(map, "idle", function () {
+            searchBox.setBounds(map.getBounds());
+            placeRefresh.nearbySearch();
+          });
+      });
+
+      // event listener when view change
+      google.maps.event.addListener(map, 'zoom_changed', function() {
+        searchBox.setBounds(map.getBounds());
+        placeRefresh.nearbySearch();
+      });
+      
+  }
+    
+  function checkUserLogin() {
+      if(user_object !== null) {
+      }
+  }
+
+  // start
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  </script>
+
+</html>
