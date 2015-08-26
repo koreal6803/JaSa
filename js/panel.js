@@ -10,7 +10,7 @@ function CenterControl(controlDiv, map, d) {
   //controlUI.style.marginBottom = '22px';
   controlUI.style.textAlign = 'center';
   controlUI.style.padding = '10px';
-  controlUI.style.width = '500px';
+  controlUI.style.width = '300px';
   controlUI.style.height = '500px';
   controlUI.style.overflowY = 'scroll';
   controlDiv.appendChild(controlUI);
