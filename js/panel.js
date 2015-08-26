@@ -36,7 +36,7 @@ function CenterControl(controlDiv, map, d) {
   
   if(d.photos !== undefined) {
      for(var i in d.photos) {
-        controlText.innerHTML += '</br><img style="-webkit-border-radius:5px" src='+d.photos[i].getUrl({'maxWidth': 470, 'maxHeight': 2000})+">";
+        controlText.innerHTML += '</br><img style="-webkit-border-radius:5px" src='+d.photos[i].getUrl({'maxWidth': 270, 'maxHeight': 2000})+">";
      }
   }
     controlText.innerHTML += '<input type="Button" value="X" onClick="map.controls[google.maps.ControlPosition.RIGHT_CENTER].clear();">';
