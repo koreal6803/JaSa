@@ -142,7 +142,7 @@
       placeRefresh.onUpdatePlaces(function(oldPlaceIdx , newPlaces){
 
         // add some places from google if newPlaces is few
-        if( newPlaces[newPlaces.length-1].google_id === undefined) {
+        if(newPlaces.length != 0 &&  newPlaces[newPlaces.length-1].google_id === undefined) {
           placeRefresh.googleNearbySearch(newPlaces);
           return;
         }
