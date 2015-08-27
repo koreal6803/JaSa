@@ -22,7 +22,7 @@
     <script async type="text/javascript" src="./js/panel.js"></script>
     <script async type="text/javascript" src="./js/placeLayer.js"></script>
     <script async type="text/javascript" src="./js/searchBox.js"></script>
-    <script async type="text/javascript" src="./js/parse.js"></script>
+    <script  type="text/javascript" src="./js/parse.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
 
   </head>
@@ -99,6 +99,7 @@
 
       // setting user location
       if (navigator.geolocation && !localhost) {
+        console.log("user location");
         navigator.geolocation.getCurrentPosition(function(position) {
           var pos = {
             lat: position.coords.latitude,
@@ -108,7 +109,8 @@
         });
       }
       else {
-	    // position of NTU
+          // position of NTU
+        console.log("ntu");
         var initialLocation = new google.maps.LatLng(25.021459, 121.538105);
         map.setCenter(initialLocation);
       }
